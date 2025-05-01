@@ -1,35 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { findShortestPath } from "./shared/tools.ts";
+import { europe_countries_adj_list, EuropeCountry } from "./shared/europe-variables.ts";
+import { ChangeEvent, useState } from "react";
+import "./app.scss";
+import Map from "./map/Map.tsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [path, setPath] = useState<EuropeCountry[]>([]);
+    const [from, setFrom] = useState<EuropeCountry | undefined>(undefined);
+    const [visited, setVisited] = useState<EuropeCountry[]>([]);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const handleCalculate = (): void => {
+        if (!from || !visited.length) {
+            return;
+        }
+        setPath(findShortestPath([from, ...visited], europe_countries_adj_list));
+    };
+
+    const handleCountrySelect = (event: ChangeEvent<HTMLSelectElement>): void => {
+        setFrom(event.currentTarget.value as EuropeCountry);
+    };
+
+    const handleCountryMultiSelect = (event: ChangeEvent<HTMLSelectElement>): void => {
+        const value = event.currentTarget.value as EuropeCountry;
+
+        if (visited.includes(value)) {
+            setVisited(visited.slice(visited.indexOf(value)));
+        } else {
+            setVisited([...visited, value]);
+        }
+    };
+
+    return (
+        <div className="main">
+            <div style={{ marginBottom: "2rem" }}>
+                <button type="button" className="button button-primary" onClick={handleCalculate}>
+                    Calculate
+                </button>
+                <div>Total visited countries: {path.length}</div>
+                <div>Path: {path.join(" - ")}</div>
+
+                <div>
+                    <label htmlFor="select-from">Select from country: </label>
+                    <select id="select-from" value={from} onChange={handleCountrySelect}>
+                        <option value={undefined}></option>
+                        {Object.keys(europe_countries_adj_list).map((opt) => (
+                            <option key={opt} value={opt}>
+                                {opt}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="select-from">Select countries to visit: </label>
+                    <select id="select-from" value={visited} multiple={true} onChange={handleCountryMultiSelect}>
+                        <option value={undefined}></option>
+                        {Object.keys(europe_countries_adj_list).map((opt) => (
+                            <option key={opt} value={opt}>
+                                {opt}
+                            </option>
+                        ))}
+                    </select>
+                    <br />
+                    {visited.join(", ")}
+                </div>
+            </div>
+            <Map />
+        </div>
+    );
 }
 
-export default App
+export default App;
