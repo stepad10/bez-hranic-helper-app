@@ -6,7 +6,7 @@ interface GeoMapProps {
     mapSrc: string;
 }
 
-function GeoMap({ mapSrc }: GeoMapProps): JSX.Element {
+function GeoMap({ mapSrc }: GeoMapProps) {
     const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
     // Calculate initial position to fit Europe in the view
