@@ -1,5 +1,5 @@
 import { CountryId } from '../types/game';
-import { GraphNode, getNeighbors } from '../data/europeGraph';
+import { GraphNode } from '../data/europeGraph';
 
 export function findShortestPath(
     startId: CountryId,
@@ -29,6 +29,36 @@ export function findShortestPath(
     }
 
     return []; // No path found
+}
+
+/**
+ * Finds the shortest path visiting valid waypoints in order.
+ * Useful for calculating complex journey costs.
+ */
+export function findMultiStagePath(
+    stops: CountryId[],
+    graph: Record<CountryId, GraphNode>
+): CountryId[] {
+    if (stops.length < 2) return stops;
+
+    let fullPath: CountryId[] = [];
+
+    for (let i = 0; i < stops.length - 1; i++) {
+        const start = stops[i];
+        const end = stops[i + 1];
+        const segment = findShortestPath(start, end, graph);
+
+        if (segment.length === 0) return []; // Broken path
+
+        // Avoid duplicating the joining node (end of segment k is start of segment k+1)
+        if (i === 0) {
+            fullPath = fullPath.concat(segment);
+        } else {
+            fullPath = fullPath.concat(segment.slice(1));
+        }
+    }
+
+    return fullPath;
 }
 
 export interface JourneyCost {

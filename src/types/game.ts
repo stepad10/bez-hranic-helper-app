@@ -45,6 +45,10 @@ export interface GameState {
     readonly startingCountry: CountryId | null;
     readonly destinationCountry: CountryId | null; // For rounds 5-7
 
+    // Card Management
+    readonly deck: readonly CountryId[];
+    readonly discard: readonly CountryId[];
+
     readonly placements: readonly PlacedToken[]; // All tokens currently on board
 
     // Actions log or history could go here for "Time Travel" / Undo
@@ -53,7 +57,7 @@ export interface GameState {
 // Discriminated Union for Actions - Reducer Pattern ready
 export type GameAction =
     | { type: 'START_GAME'; payload: { playerIds: string[] } }
-    | { type: 'NEXT_PHASE' }
-    | { type: 'DEAL_CARDS'; payload: { offer: CountryId[]; starting: CountryId; destination?: CountryId } }
+    | { type: 'DEAL_ROUND'; payload: { round: number } } // Handles shuffling if needed, drawing 7+1 cards
     | { type: 'PLACE_TOKEN'; payload: { playerId: PlayerId; countryId: CountryId | 'SPACE_40' } }
+    | { type: 'RESOLVE_ROUND'; } // Triggers evaluation logic
     | { type: 'UPDATE_MONEY'; payload: { playerId: PlayerId; amount: number; operation: 'add' | 'subtract' } };
