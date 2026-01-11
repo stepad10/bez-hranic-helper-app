@@ -40,15 +40,49 @@ export function GameControls() {
             )}
 
             {phase === 'TRAVEL_PLANNING' && (
-                <button onClick={handleResolve} style={{ padding: '0.5rem 1rem', background: '#22c55e', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                    Finish Round & Evaluate
-                </button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <button onClick={handleResolve} style={{ padding: '0.5rem 1rem', background: '#22c55e', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                        Finish Round & Evaluate
+                    </button>
+                    <button onClick={() => dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p1', countryId: 'SPACE_40' } })} style={{ padding: '0.5rem 1rem', background: '#64748b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}>
+                        Space 40 (Pass - 40€)
+                    </button>
+                </div>
             )}
 
             {phase === 'ROUND_END' && (
-                <button onClick={() => dispatch({ type: 'DEAL_ROUND', payload: { round: round + 1 } })} style={{ padding: '0.5rem 1rem', background: '#eab308', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                <button onClick={() => {
+                    if (round >= 7) {
+                        // Trigger GAME_END via a specific action or just set next phase?
+                        // Our reducer's RESOLVE_ROUND already sets phase to GAME_END if round > 7?
+                        // Wait, reducer checks `state.round` which isn't incremented yet.
+                        // RESOLVE_ROUND sets next phase based on `state.round + 1`.
+                        // If round was 7, nextRound is 8, phase becomes GAME_END.
+                        // So we just need to confirm if we clicked "Finish Round" in round 7, passed `RESOLVE_ROUND`
+                        // then we are in `GAME_END` immediately?
+                        // Ah, `RESOLVE_ROUND` logic: `const nextPhase = nextRound > 7 ? 'GAME_END' : 'ROUND_END';`
+                        // But it returns `phase: nextPhase`.
+                        // So if we were in Round 7, hit Resolve, we are ALREADY in GAME_END.
+                        // The `phase === 'ROUND_END'` block wouldn't even show!
+                        // But wait, my reducer logic:
+                        // `const nextRound = state.round + 1;`
+                        // `const nextPhase = nextRound > 7 ? 'GAME_END' : 'ROUND_END';`
+                        // `return { ... phase: nextPhase ... }`
+                        // If round=7, nextRound=8. nextPhase='GAME_END'.
+                        // So after Resolve, we are in GAME_END.
+                        // So we need a block for GAME_END if we want controls there (like Restart).
+                    } else {
+                        dispatch({ type: 'DEAL_ROUND', payload: { round: round + 1 } });
+                    }
+                }} style={{ padding: '0.5rem 1rem', background: '#eab308', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
                     Next Round
                 </button>
+            )}
+
+            {phase === 'GAME_END' && (
+                <div style={{ padding: '0.5rem', background: '#fef3c7', borderRadius: '4px', textAlign: 'center' }}>
+                    Game Over!
+                </div>
             )}
 
             <hr style={{ width: '100%', margin: '0.5rem 0' }} />

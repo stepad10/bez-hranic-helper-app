@@ -42,6 +42,7 @@ export interface GameState {
 
     // Board State
     readonly offer: readonly CountryId[]; // 7 cards usually
+    readonly currentSelections: Record<PlayerId, (CountryId | 'SPACE_40')[]>; // Track choices per round
     readonly startingCountry: CountryId | null;
     readonly destinationCountry: CountryId | null; // For rounds 5-7
 

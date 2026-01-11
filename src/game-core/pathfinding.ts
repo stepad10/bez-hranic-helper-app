@@ -71,12 +71,10 @@ export interface JourneyCost {
 
 export function calculateJourneyCost(
     path: CountryId[],
-    graph: Record<CountryId, GraphNode>
+    graph: Record<CountryId, GraphNode>,
+    waypoints?: CountryId[] // Optional list of stops (Start -> Choice1 -> Choice2 -> Dest)
 ): JourneyCost {
     if (path.length === 0) return { total: 0, breakdown: { borders: 0, neighbors: 0 } };
-
-    const startId = path[0];
-    const endId = path[path.length - 1];
 
     // Rule 1: 10 euros per border crossing.
     // Path length of N countries means N-1 border crossings.
@@ -84,12 +82,29 @@ export function calculateJourneyCost(
     const borderCost = borderCrossings * 10;
 
     // Rule 2: Neighbor penalty.
-    // If the destination directly borders the start, +30 surcharge.
-    // "Countries connected by a sea line are also considered neighbors."
-    const startNode = graph[startId];
-    const isDirectNeighbor = startNode?.neighbors.some(n => n.target === endId);
+    let neighborCost = 0;
 
-    const neighborCost = isDirectNeighbor ? 30 : 0;
+    if (waypoints && waypoints.length >= 2) {
+        // Calculate penalty between consecutive waypoints
+        for (let i = 0; i < waypoints.length - 1; i++) {
+            const from = waypoints[i];
+            const to = waypoints[i + 1];
+
+            const fromNode = graph[from];
+            const isNeighbor = fromNode?.neighbors.some(n => n.target === to);
+
+            if (isNeighbor) {
+                neighborCost += 30;
+            }
+        }
+    } else {
+        // Fallback or Legacy (Start -> End)
+        const startId = path[0];
+        const endId = path[path.length - 1];
+        const startNode = graph[startId];
+        const isDirectNeighbor = startNode?.neighbors.some(n => n.target === endId);
+        if (isDirectNeighbor) neighborCost = 30;
+    }
 
     return {
         total: borderCost + neighborCost,
