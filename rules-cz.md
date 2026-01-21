@@ -401,6 +401,9 @@ Státy jsou považovány za souvislé, i když sestávají z více ostrovů a pe
 - **Dánsko** přímo sousedí se Švédskem (spojuje je Öresundský most).
 - **Řecko** se všemi svými ostrovy je považováno za souvislý stát a sousedí s Tureckem a po moři i s Maltou.
 - **Velká Británie** sousedí s Irskem (Severní Irsko je součástí Velké Británie).
+- **Island** sousedí s Irskem, Velkou Británií a Norskem (po moři).
+- **Malta** sousedí s Itálií a Řeckem (po moři).
+- **Kypr** sousedí s Tureckem (po moři).
 
 #### Zvláštní případ: Rusko
 

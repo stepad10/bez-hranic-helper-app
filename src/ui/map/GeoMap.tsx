@@ -4,6 +4,7 @@ import europeTopo from "../../assets/europe.json";
 import { useGameStore } from "../../store/gameStore";
 import { MapRegion } from "./MapRegion";
 import { MapTokens } from "./MapTokens";
+import { SeaRoutes } from "./SeaRoutes";
 
 const geoUrl = europeTopo;
 
@@ -45,6 +46,11 @@ function GeoMap(): JSX.Element {
                     <Geographies geography={geoUrl}>
                         {({ geographies }) => (
                             <>
+                                {/* Sea Routes Layer (Underneath Countries) */}
+                                <SeaRoutes geographies={geographies} />
+
+
+
                                 {geographies.map((geo) => {
                                     const geoId = geo.id;
                                     const isStart = geoId === startingCountry;

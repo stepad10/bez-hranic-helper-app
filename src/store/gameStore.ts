@@ -156,10 +156,31 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 destinationCountry = drawCard() || null;
             }
 
+            // Money Increase Rules (Part 2 & 3)
+            let updatedPlayersForDeal = { ...state.players };
+            if (round === 3) {
+                // Part 2: Add 200€
+                Object.keys(updatedPlayersForDeal).forEach(pid => {
+                    updatedPlayersForDeal[pid] = {
+                        ...updatedPlayersForDeal[pid],
+                        money: updatedPlayersForDeal[pid].money + 200
+                    };
+                });
+            } else if (round === 5) {
+                // Part 3: Add 300€
+                Object.keys(updatedPlayersForDeal).forEach(pid => {
+                    updatedPlayersForDeal[pid] = {
+                        ...updatedPlayersForDeal[pid],
+                        money: updatedPlayersForDeal[pid].money + 300
+                    };
+                });
+            }
+
             return {
                 ...state,
                 round: round,
                 phase: 'TRAVEL_PLANNING',
+                players: updatedPlayersForDeal,
                 deck: currentDeck,
                 discard: currentDiscard,
                 offer,

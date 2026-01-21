@@ -401,6 +401,9 @@ Countries are considered contiguous even when they consist of multiple islands a
 - **Denmark** directly borders Sweden (connected by the Øresund Bridge).
 - **Greece** with all its islands is considered a contiguous country and borders Turkey and Malta (by sea).
 - **Great Britain** borders Ireland (Northern Ireland is part of Great Britain).
+- **Iceland** borders Ireland, United Kingdom, and Norway (by sea).
+- **Malta** borders Italy and Greece (by sea).
+- **Cyprus** borders Turkey (by sea).
 
 #### Special Case: Russia
 
