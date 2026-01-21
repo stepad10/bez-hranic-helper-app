@@ -102,6 +102,27 @@ export function MainMenu() {
                         </div>
                     </div>
 
+                    {/* Map Selection */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.95rem' }}>
+                        <span>Map</span>
+                        <div style={{ display: 'flex', gap: '0.25rem', background: 'rgba(0,0,0,0.2)', padding: '2px', borderRadius: '6px' }}>
+                            <button
+                                style={{
+                                    background: 'white',
+                                    color: '#0f172a',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    padding: '0.25rem 0.75rem',
+                                    fontSize: '0.85rem',
+                                    cursor: 'default',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                Europe
+                            </button>
+                        </div>
+                    </div>
+
                     {/* Map Style Selector */}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.95rem' }}>
                         <span>Map Style</span>

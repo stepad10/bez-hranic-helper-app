@@ -8,6 +8,7 @@ interface GameStore extends GameState {
     settings: {
         showTravelCosts: boolean;
         mapStyle: 'blank' | 'codes';
+        map: 'europe';
     };
     activePlayerId: string | null;
     roundHistory: RoundSummary[];
@@ -41,7 +42,8 @@ const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     currentSelections: {},
     settings: {
         showTravelCosts: true,
-        mapStyle: 'blank'
+        mapStyle: 'blank',
+        map: 'europe'
     },
     activePlayerId: null,
     roundHistory: []
@@ -96,7 +98,10 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
         }
 
         case 'START_GAME': {
-            const allCountries = Object.keys(EUROPE_GRAPH) as CountryId[];
+            // In the future, we can switch between graphs based on state.settings.map
+            // For now, only EUROPE_GRAPH is available
+            const mapGraph = state.settings.map === 'europe' ? EUROPE_GRAPH : EUROPE_GRAPH;
+            const allCountries = Object.keys(mapGraph) as CountryId[];
             const deck = shuffle(allCountries);
             const playerIds = action.payload.playerIds;
 

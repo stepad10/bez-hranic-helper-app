@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Line } from 'react-simple-maps';
 import { geoCentroid } from 'd3-geo';
 import { EUROPE_GRAPH } from '../../data/europeGraph';
