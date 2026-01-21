@@ -6,23 +6,27 @@ import { CardOffer } from "./ui/game/CardOffer";
 import { GameSidebar } from "./ui/game/GameSidebar";
 import { useGameStore } from "./store/gameStore";
 import { GameEndView } from "./ui/game/GameEndView";
+import { MainMenu } from "./ui/menu/MainMenu";
 
 function App() {
     const phase = useGameStore(state => state.phase);
     return (
-        <div className="main" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', display: 'flex' }}>
-            {/* Sidebar on the Left */}
-            <GameSidebar />
+        <div className="main">
+            {phase === 'SETUP' ? (
+                <MainMenu />
+            ) : (
+                <>
+                    {/* Sidebar on the Left */}
+                    <GameSidebar />
+                    <GeoMap />
 
-            <div style={{ position: 'relative', flex: 1, height: '100%' }}>
-                <GeoMap />
-
-                {/* UI Overlay Layer */}
-                <GameControls />
-                <CardOffer />
-                <PlayerPanel />
-                {phase === 'GAME_END' && <GameEndView />}
-            </div>
+                    {/* UI Overlay Layer */}
+                    <GameControls />
+                    <CardOffer />
+                    <PlayerPanel />
+                    {phase === 'GAME_END' && <GameEndView />}
+                </>
+            )}
         </div>
     );
 }

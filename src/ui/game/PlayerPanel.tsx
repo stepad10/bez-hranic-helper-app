@@ -2,6 +2,8 @@ import { useGameStore } from "../../store/gameStore";
 
 export function PlayerPanel() {
     const players = useGameStore(state => state.players);
+    const selections = useGameStore(state => state.currentSelections);
+    const round = useGameStore(state => state.round);
     const playerIds = Object.keys(players);
 
     if (playerIds.length === 0) return null;
@@ -34,6 +36,9 @@ export function PlayerPanel() {
                         <div style={{ fontSize: '1.2em', color: '#10b981' }}>{p.money} €</div>
                         <div style={{ fontSize: '0.8em', color: '#666' }}>
                             Tokens: {p.tokens.remaining}
+                            {(selections[id] || []).length === (round <= 2 ? 1 : 2) && (
+                                <span style={{ marginLeft: '0.5rem', color: '#10b981' }}>✓ Ready</span>
+                            )}
                         </div>
                     </div>
                 );

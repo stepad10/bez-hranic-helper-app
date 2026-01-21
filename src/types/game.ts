@@ -2,6 +2,7 @@ export type PlayerId = string;
 export type CountryId = string;
 
 export type RoundPhase =
+    | 'SETUP' // Initial screen
     | 'DEALING'
     | 'TRAVEL_PLANNING'
     | 'EVALUATION'

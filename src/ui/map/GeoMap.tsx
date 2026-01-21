@@ -13,16 +13,17 @@ function GeoMap(): JSX.Element {
         startingCountry,
         destinationCountry,
         placements,
+        settings
     } = useGameStore(state => state);
 
     // Hover state for cost preview
     const [hoveredCost, setHoveredCost] = useState<{ total: number, breakdown: any } | null>(null);
 
     return (
-        <div style={{ position: 'relative', width: "100%", height: "100vh", background: "#f0f8ff" }}>
+        <div style={{ position: 'relative', width: "100%", height: "100vh", background: "#f0f8ff", overflow: "hidden" }}>
 
             {/* Hover Tooltip */}
-            {hoveredCost && (
+            {hoveredCost && settings.showTravelCosts && (
                 <div style={{
                     position: 'absolute',
                     top: 20, left: '50%', transform: 'translateX(-50%)',

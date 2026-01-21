@@ -5,12 +5,16 @@ import { EUROPE_GRAPH } from '../data/europeGraph';
 import { findMultiStagePath, calculateJourneyCost } from '../game-core/pathfinding';
 
 interface GameStore extends GameState {
-    dispatch: (action: GameAction) => void;
+    settings: {
+        showTravelCosts: boolean;
+        mapStyle: 'blank' | 'codes';
+    };
+    dispatch: (action: GameAction | { type: 'UPDATE_SETTINGS', payload: Partial<GameStore['settings']> }) => void;
 }
 
 const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     round: 1,
-    phase: 'DEALING',
+    phase: 'SETUP',
     players: {},
     offer: [],
     startingCountry: null,
@@ -19,6 +23,10 @@ const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     deck: [],
     discard: [],
     currentSelections: {},
+    settings: {
+        showTravelCosts: true,
+        mapStyle: 'blank'
+    }
 };
 
 export const useGameStore = create<GameStore>()(
@@ -26,7 +34,7 @@ export const useGameStore = create<GameStore>()(
         (set) => ({
             ...INITIAL_STATE,
 
-            dispatch: (action: GameAction) => {
+            dispatch: (action: GameAction | { type: 'UPDATE_SETTINGS', payload: Partial<GameStore['settings']> }) => {
                 set((state) => reducer(state, action));
             },
         }),
@@ -50,8 +58,18 @@ const shuffle = <T>(array: T[]): T[] => {
 };
 
 // Pure Reducer Function for State Logic
-function reducer(state: GameStore, action: GameAction): Partial<GameStore> {
+function reducer(state: GameStore, action: any): Partial<GameStore> {
     switch (action.type) {
+        case 'UPDATE_SETTINGS': {
+            return {
+                ...state,
+                settings: {
+                    ...state.settings,
+                    ...action.payload
+                }
+            };
+        }
+
         case 'START_GAME': {
             const allCountries = Object.keys(EUROPE_GRAPH) as CountryId[];
             const deck = shuffle(allCountries);
@@ -60,7 +78,7 @@ function reducer(state: GameStore, action: GameAction): Partial<GameStore> {
                 ...state,
                 round: 1,
                 phase: 'DEALING',
-                players: action.payload.playerIds.reduce((acc, id, idx) => ({
+                players: action.payload.playerIds.reduce((acc: any, id: string, idx: number) => ({
                     ...acc,
                     [id]: {
                         id,
@@ -136,6 +154,18 @@ function reducer(state: GameStore, action: GameAction): Partial<GameStore> {
             const start = state.startingCountry;
             const dest = state.destinationCountry;
             const isFinale = state.round === 7;
+
+            // Validation: Ensure all players have correct number of selections
+            const requiredSelections = state.round <= 2 ? 1 : 2;
+            const allReady = Object.keys(state.players).every(pid => {
+                const selections = state.currentSelections[pid] || [];
+                return selections.length === requiredSelections;
+            });
+
+            if (!allReady) {
+                console.warn("Attempted to resolve round without all players ready");
+                return state; // No-op if not ready
+            }
 
             if (start) {
                 Object.keys(updatedPlayers).forEach(pid => {

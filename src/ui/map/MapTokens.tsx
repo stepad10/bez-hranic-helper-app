@@ -10,6 +10,7 @@ interface MapTokensProps {
 
 export function MapTokens({ geo, tokensHere }: MapTokensProps) {
     const players = useGameStore(state => state.players);
+    const settings = useGameStore(state => state.settings);
     const geoId = geo.id;
 
     if (!EUROPE_GRAPH[geoId]) return null;
@@ -18,23 +19,25 @@ export function MapTokens({ geo, tokensHere }: MapTokensProps) {
 
     return (
         <g>
-            {/* City Label */}
-            <Marker coordinates={centroid}>
-                <text
-                    textAnchor="middle"
-                    y={2}
-                    style={{
-                        fontFamily: "Arial",
-                        fontSize: "0.5em",
-                        fill: "#333",
-                        pointerEvents: "none",
-                        fontWeight: "bold",
-                        textShadow: "0px 0px 2px white"
-                    }}
-                >
-                    {geoId}
-                </text>
-            </Marker>
+            {/* City Label - Conditional */}
+            {settings.mapStyle === 'codes' && (
+                <Marker coordinates={centroid}>
+                    <text
+                        textAnchor="middle"
+                        y={2}
+                        style={{
+                            fontFamily: "Arial",
+                            fontSize: "0.5em",
+                            fill: "#333",
+                            pointerEvents: "none",
+                            fontWeight: "bold",
+                            textShadow: "0px 0px 2px white"
+                        }}
+                    >
+                        {geoId}
+                    </text>
+                </Marker>
+            )}
 
             {/* Render Tokens */}
             {tokensHere.map((token, idx) => {

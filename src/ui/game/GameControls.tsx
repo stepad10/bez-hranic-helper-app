@@ -3,10 +3,14 @@ import { useGameStore } from "../../store/gameStore";
 export function GameControls() {
     const phase = useGameStore(state => state.phase);
     const round = useGameStore(state => state.round);
+    const selections = useGameStore(state => state.currentSelections);
+    const players = useGameStore(state => state.players);
     const dispatch = useGameStore(state => state.dispatch);
 
     const handleStart = () => {
-        dispatch({ type: 'START_GAME', payload: { playerIds: ['p1', 'p2', 'p3', 'p4'] } });
+        // Restarting -> Go back to setup? Or same players?
+        // Let's make "Restart" go back to Setup by refreshing or implementing a RESET action.
+        window.location.reload();
     };
 
     const handleDeal = () => {
@@ -15,6 +19,14 @@ export function GameControls() {
 
     const handleResolve = () => {
         dispatch({ type: 'RESOLVE_ROUND' });
+    };
+
+    const canResolve = () => {
+        const requiredSelections = round <= 2 ? 1 : 2;
+        return Object.keys(players).every(pid => {
+            const playerSelections = selections[pid] || [];
+            return playerSelections.length === requiredSelections;
+        });
     };
 
     return (
@@ -41,10 +53,30 @@ export function GameControls() {
 
             {phase === 'TRAVEL_PLANNING' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <button onClick={handleResolve} style={{ padding: '0.5rem 1rem', background: '#22c55e', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                    <button
+                        onClick={handleResolve}
+                        disabled={!canResolve()}
+                        style={{
+                            padding: '0.5rem 1rem',
+                            background: canResolve() ? '#22c55e' : '#9ca3af',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: canResolve() ? 'pointer' : 'not-allowed'
+                        }}>
                         Finish Round & Evaluate
                     </button>
-                    <button onClick={() => dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p1', countryId: 'SPACE_40' } })} style={{ padding: '0.5rem 1rem', background: '#64748b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}>
+                    <button
+                        onClick={() => dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p1', countryId: 'SPACE_40' } })}
+                        style={{
+                            padding: '0.5rem 1rem',
+                            background: (selections['p1'] || []).includes('SPACE_40') ? '#475569' : '#64748b',
+                            border: (selections['p1'] || []).includes('SPACE_40') ? '2px solid #fbbf24' : 'none',
+                            color: 'white',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontSize: '0.9em'
+                        }}>
                         Space 40 (Pass - 40€)
                     </button>
                 </div>
