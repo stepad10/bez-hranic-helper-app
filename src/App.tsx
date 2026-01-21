@@ -1,6 +1,6 @@
 import "./app.scss";
 import GeoMap from "./ui/map/GeoMap.tsx";
-import { GameControls } from "./ui/game/GameControls";
+
 import { PlayerPanel } from "./ui/game/PlayerPanel";
 import { CardOffer } from "./ui/game/CardOffer";
 import { GameSidebar } from "./ui/game/GameSidebar";
@@ -21,7 +21,6 @@ function App() {
                     <GeoMap />
 
                     {/* UI Overlay Layer */}
-                    <GameControls />
                     <CardOffer />
                     <PlayerPanel />
                     {phase === 'GAME_END' && <GameEndView />}

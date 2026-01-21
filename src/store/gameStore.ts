@@ -10,10 +10,22 @@ interface GameStore extends GameState {
         mapStyle: 'blank' | 'codes';
     };
     activePlayerId: string | null;
+    roundHistory: RoundSummary[];
     dispatch: (action: GameAction |
     { type: 'UPDATE_SETTINGS', payload: Partial<GameStore['settings']> } |
     { type: 'SET_ACTIVE_PLAYER', payload: string }
     ) => void;
+}
+
+export interface RoundSummary {
+    round: number;
+    players: Record<string, {
+        journeyCost: number;
+        stackingPenalty: number;
+        space40Cost: number;
+        totalCost: number;
+        totalEarnings?: number; // For Round 7
+    }>;
 }
 
 const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
@@ -31,7 +43,8 @@ const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
         showTravelCosts: true,
         mapStyle: 'blank'
     },
-    activePlayerId: null
+    activePlayerId: null,
+    roundHistory: []
 };
 
 export const useGameStore = create<GameStore>()(
@@ -108,6 +121,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 deck,
                 discard: [],
                 currentSelections: {},
+                roundHistory: []
             };
         }
 
@@ -181,29 +195,19 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 return state; // No-op if not ready
             }
 
+            const currentRoundSummary: RoundSummary = {
+                round: state.round,
+                players: {}
+            };
+
             if (start) {
                 Object.keys(updatedPlayers).forEach(pid => {
                     const player = { ...updatedPlayers[pid] };
                     const choices = selections[pid] || [];
 
-                    // 1. Stacking Penalty (Simplified: if shared choice, pay 10)
-                    // Real rule: "If you place token where another is..."
-                    // In simultaneous reveal, if multiple players pick same, they ALL pay?
-                    // Rules say: "If a player places a token on a country where another token is ALREADY placed"
-                    // In simultaneous play, usually they are placed at same time. 
-                    // Let's assume for this version: If >1 player picked same country, they clash.
-                    // OR check against *previous* rounds' placements?
-                    // "Tokens remain on the board" -> Yes.
-                    // So we check if `state.placements` (historical) + other current players have this country.
-
-                    // For Part 1/2, let's just check if ANYONE else is there (historical).
-                    // We need to know if `countryId` has tokens from BEFORE this round.
-                    // `state.placements` currently includes `currentSelections` because we merged them in `PLACE_TOKEN`.
-                    // We need to differentiate "new" vs "old".
-                    // Actually `PLACE_TOKEN` in our reducer is accumulating to `placements` list too.
-                    // So `placements` has everything.
-
-                    let roundCost = 0;
+                    let journeyCost = 0;
+                    let stackingPenalty = 0;
+                    let space40Cost = 0;
                     let roundEarnings = 0;
 
                     // Calculate Journey Cost
@@ -223,7 +227,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                                 if (isFinale) {
                                     roundEarnings += cost.total;
                                 } else {
-                                    roundCost += cost.total;
+                                    journeyCost += cost.total;
                                 }
                             }
                         } catch (e) {
@@ -233,7 +237,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
 
                     // Base Cost for Space 40
                     if (choices.includes('SPACE_40')) {
-                        roundCost += 40;
+                        space40Cost += 40;
                     }
 
                     // Stacking Penalty (Check ALL choices, including SPACE_40)
@@ -242,19 +246,29 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                         // 'placements' includes current selections.
                         const tokensOnCountry = state.placements.filter(p => p.countryId === cid);
                         if (tokensOnCountry.length > 1) {
-                            if (isFinale) {
-                                roundEarnings -= 10;
-                            } else {
-                                roundCost += 10;
-                            }
+                            stackingPenalty += 10;
                         }
                     });
 
+                    let totalCost = journeyCost + space40Cost + stackingPenalty;
+
                     if (isFinale) {
+                        // In finale, stacking is a deduction from earnings? Or cost?
+                        // "Earnings - 10"?
+                        roundEarnings -= stackingPenalty;
                         player.money += roundEarnings;
                     } else {
-                        player.money = Math.max(0, player.money - roundCost);
+                        player.money = Math.max(0, player.money - totalCost);
                     }
+
+                    // Store summary for this player
+                    currentRoundSummary.players[pid] = {
+                        journeyCost,
+                        stackingPenalty,
+                        space40Cost,
+                        totalCost,
+                        totalEarnings: isFinale ? roundEarnings : undefined
+                    };
 
                     // Consume token
                     if (player.tokens.remaining > 0) {
@@ -281,6 +295,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 destinationCountry: null,
                 discard: [...state.discard, ...usedCards],
                 currentSelections: {},
+                roundHistory: [...state.roundHistory, currentRoundSummary]
             };
         }
 

@@ -44,7 +44,7 @@ export function PlayerPanel() {
                             cursor: 'pointer'
                         }}
                     >
-                        <div style={{ fontWeight: 'bold' }}>{p.name} {isActive && '(Active)'}</div>
+                        <div style={{ fontWeight: 'bold' }}>{p.name}</div>
                         <div style={{ fontSize: '1.2em', color: '#10b981' }}>{p.money} €</div>
                         <div style={{ fontSize: '0.8em', color: '#666' }}>
                             Tokens: {p.tokens.remaining}

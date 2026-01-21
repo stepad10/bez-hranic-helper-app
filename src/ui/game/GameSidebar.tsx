@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import { useGameStore } from "../../store/gameStore";
 
 export function GameSidebar() {
+    const [isLegendOpen, setIsLegendOpen] = useState(false);
     const phase = useGameStore(state => state.phase);
     const round = useGameStore(state => state.round);
+    const dispatch = useGameStore(state => state.dispatch);
+
+    const selections = useGameStore(state => state.currentSelections);
+    const players = useGameStore(state => state.players);
 
     // Dynamic Instructions based on Phase & Round
     const getInstructions = () => {
@@ -26,6 +32,14 @@ export function GameSidebar() {
         }
     };
 
+    const canResolve = () => {
+        const requiredSelections = round <= 2 ? 1 : 2;
+        return Object.keys(players).length > 0 && Object.keys(players).every(pid => {
+            const playerSelections = selections[pid] || [];
+            return playerSelections.length === requiredSelections;
+        });
+    };
+
     return (
         <div className="game-sidebar" style={{
             position: 'absolute',
@@ -39,9 +53,23 @@ export function GameSidebar() {
             display: 'flex',
             flexDirection: 'column',
             zIndex: 90, // Below top overlays but above map
-            overflowY: 'auto'
+            overflowY: 'hidden'
         }}>
-            <h1 style={{ fontSize: '1.5rem', marginTop: 0, color: '#f59e0b' }}>Without Borders</h1>
+            {/* Header with Back Button */}
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                <button
+                    onClick={() => window.location.reload()}
+                    title="Restart Game"
+                    style={{
+                        background: 'none', border: 'none', cursor: 'pointer',
+                        fontSize: '1.2rem', marginRight: '0.5rem', color: '#666',
+                        padding: '0 0.25rem'
+                    }}
+                >
+                    ✕
+                </button>
+                <h1 style={{ fontSize: '1.5rem', margin: 0, color: '#f59e0b', flex: 1 }}>Without Borders</h1>
+            </div>
 
             {/* Phase Info */}
             <div style={{ marginBottom: '2rem' }}>
@@ -52,22 +80,103 @@ export function GameSidebar() {
                 <p style={{ lineHeight: '1.5', fontSize: '0.95rem', color: '#333' }}>
                     {getInstructions()}
                 </p>
+
+                {phase === 'DEALING' && (
+                    <button
+                        onClick={() => dispatch({ type: 'DEAL_ROUND', payload: { round } })}
+                        style={{
+                            marginTop: '1rem',
+                            padding: '0.5rem 1rem',
+                            background: '#3b82f6',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            display: 'block',
+                            width: '100%'
+                        }}
+                    >
+                        Deal Round
+                    </button>
+                )}
+
+                {phase === 'TRAVEL_PLANNING' && (
+                    <button
+                        onClick={() => dispatch({ type: 'RESOLVE_ROUND' })}
+                        disabled={!canResolve()}
+                        style={{
+                            marginTop: '1rem',
+                            padding: '0.5rem 1rem',
+                            background: canResolve() ? '#22c55e' : '#9ca3af',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: canResolve() ? 'pointer' : 'not-allowed',
+                            display: 'block',
+                            width: '100%'
+                        }}>
+                        Finish Round & Evaluate
+                    </button>
+                )}
+
+                {phase === 'ROUND_END' && (
+                    <button
+                        onClick={() => dispatch({ type: 'DEAL_ROUND', payload: { round: round + 1 } })}
+                        style={{
+                            marginTop: '1rem',
+                            padding: '0.5rem 1rem',
+                            background: '#eab308',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            display: 'block',
+                            width: '100%',
+                            marginBottom: '1rem'
+                        }}>
+                        Next Round
+                    </button>
+                )}
+
+            </div>
+
+            {/* Score History Log - Scrollable Area */}
+            <div style={{ flex: 1, overflowY: 'auto', minHeight: 0, marginBottom: '1rem', borderTop: '1px solid #eee' }}>
+                <HistoryLog players={players} />
             </div>
 
             {/* Legend */}
-            <div style={{ marginTop: 'auto' }}>
-                <h3 style={{ borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>Map Legend</h3>
-                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    <LegendItem color="#22c55e" label="Starting Country" />
-                    <LegendItem color="#ef4444" label="Destination Country" />
-                    <LegendItem color="#fef08a" border="#eab308" label="Offer (Available)" />
-                    <LegendItem color="#d6d6d6" border="#7d7d7d" label="Ordinary Country" />
-                    <LegendItem color="#3b82f6" type="circle" label="Player Token" />
-                </ul>
-            </div>
+            {/* Legend */}
+            <div style={{ marginTop: 'auto', borderTop: '1px solid #eee' }}>
+                <button
+                    onClick={() => setIsLegendOpen(!isLegendOpen)}
+                    style={{
+                        width: '100%',
+                        background: 'none',
+                        border: 'none',
+                        padding: '0.5rem 0',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        color: '#666',
+                        fontSize: '0.9rem',
+                        fontWeight: 'bold'
+                    }}
+                >
+                    <span>Map Legend</span>
+                    <span>{isLegendOpen ? '▼' : '▲'}</span>
+                </button>
 
-            <div style={{ marginTop: '2rem', fontSize: '0.8rem', color: '#999', textAlign: 'center' }}>
-                v0.1.0 Alpha
+                {isLegendOpen && (
+                    <ul style={{ listStyle: 'none', padding: '0 0 1rem 0', margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <LegendItem color="#22c55e" label="Starting Country" />
+                        <LegendItem color="#ef4444" label="Destination Country" />
+                        <LegendItem color="#fef08a" border="#eab308" label="Offer (Available)" />
+                        <LegendItem color="#d6d6d6" border="#7d7d7d" label="Ordinary Country" />
+                        <LegendItem color="#3b82f6" type="circle" label="Player Token" />
+                    </ul>
+                )}
             </div>
         </div>
     );
@@ -75,15 +184,60 @@ export function GameSidebar() {
 
 function LegendItem({ color, border, label, type = 'box' }: { color: string, border?: string, label: string, type?: 'box' | 'circle' }) {
     return (
-        <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem' }}>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem' }}>
             <div style={{
-                width: '16px',
-                height: '16px',
+                width: '12px',
+                height: '12px',
                 background: color,
                 border: border ? `2px solid ${border}` : 'none',
-                borderRadius: type === 'circle' ? '50%' : '4px'
+                borderRadius: type === 'circle' ? '50%' : '2px'
             }} />
             <span>{label}</span>
         </li>
+    );
+}
+
+function HistoryLog({ players }: { players: any }) {
+    const history = useGameStore(state => state.roundHistory);
+
+    if (!history || history.length === 0) return null;
+
+    // Show latest first
+    const reversedHistory = [...history].reverse();
+
+    return (
+        <div style={{ paddingTop: '1rem' }}>
+            <h3 style={{ fontSize: '1rem', margin: '0 0 1rem 0', color: '#666' }}>Round History</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {reversedHistory.map((summary) => (
+                    <div key={summary.round} style={{ fontSize: '0.85rem' }}>
+                        <div style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#888' }}>Round {summary.round}</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                            {Object.keys(summary.players).map(pid => {
+                                const pVal = summary.players[pid];
+                                const pName = players[pid]?.name || pid;
+                                const pColor = players[pid]?.color || '#333';
+
+                                return (
+                                    <div key={pid} style={{ borderLeft: `3px solid ${pColor}`, paddingLeft: '0.5rem' }}>
+                                        <div style={{ fontWeight: 'bold' }}>{pName}</div>
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '0.25rem', color: '#555' }}>
+                                            {pVal.journeyCost > 0 && <span>Travel: -{pVal.journeyCost}€</span>}
+                                            {pVal.space40Cost > 0 && <span>Space 40: -{pVal.space40Cost}€</span>}
+                                            {pVal.stackingPenalty > 0 && <span>Stacking: -{pVal.stackingPenalty}€</span>}
+                                            {pVal.totalEarnings !== undefined ? (
+                                                <><span style={{ fontWeight: 'bold' }}>Total Earned:</span> <span style={{ color: '#10b981', fontWeight: 'bold' }}>+{pVal.totalEarnings}€</span></>
+                                            ) : (
+                                                <><span style={{ fontWeight: 'bold' }}>Total Cost:</span> <span style={{ color: '#ef4444', fontWeight: 'bold' }}>-{pVal.totalCost}€</span></>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }
