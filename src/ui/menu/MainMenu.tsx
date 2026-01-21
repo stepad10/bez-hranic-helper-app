@@ -4,7 +4,7 @@ import { useGameStore } from '../../store/gameStore';
 export function MainMenu() {
     const dispatch = useGameStore(state => state.dispatch);
     const settings = useGameStore(state => state.settings);
-    const [playerCount, setPlayerCount] = useState<number>(4);
+    const [playerCount, setPlayerCount] = useState<number>(2);
 
     const toggleTravelCosts = () => {
         dispatch({ type: 'UPDATE_SETTINGS', payload: { showTravelCosts: !settings.showTravelCosts } });

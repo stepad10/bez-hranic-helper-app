@@ -9,7 +9,11 @@ interface GameStore extends GameState {
         showTravelCosts: boolean;
         mapStyle: 'blank' | 'codes';
     };
-    dispatch: (action: GameAction | { type: 'UPDATE_SETTINGS', payload: Partial<GameStore['settings']> }) => void;
+    activePlayerId: string | null;
+    dispatch: (action: GameAction |
+    { type: 'UPDATE_SETTINGS', payload: Partial<GameStore['settings']> } |
+    { type: 'SET_ACTIVE_PLAYER', payload: string }
+    ) => void;
 }
 
 const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
@@ -26,7 +30,8 @@ const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     settings: {
         showTravelCosts: true,
         mapStyle: 'blank'
-    }
+    },
+    activePlayerId: null
 };
 
 export const useGameStore = create<GameStore>()(
@@ -34,7 +39,7 @@ export const useGameStore = create<GameStore>()(
         (set) => ({
             ...INITIAL_STATE,
 
-            dispatch: (action: GameAction | { type: 'UPDATE_SETTINGS', payload: Partial<GameStore['settings']> }) => {
+            dispatch: (action) => {
                 set((state) => reducer(state, action));
             },
         }),
@@ -70,15 +75,23 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             };
         }
 
+        case 'SET_ACTIVE_PLAYER': {
+            return {
+                ...state,
+                activePlayerId: action.payload
+            };
+        }
+
         case 'START_GAME': {
             const allCountries = Object.keys(EUROPE_GRAPH) as CountryId[];
             const deck = shuffle(allCountries);
+            const playerIds = action.payload.playerIds;
 
             return {
                 ...state,
                 round: 1,
                 phase: 'DEALING',
-                players: action.payload.playerIds.reduce((acc: any, id: string, idx: number) => ({
+                players: playerIds.reduce((acc: any, id: string, idx: number) => ({
                     ...acc,
                     [id]: {
                         id,
@@ -88,6 +101,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                         tokens: { remaining: 1, placed: false },
                     }
                 }), {}),
+                activePlayerId: playerIds[0], // Auto-select first player
                 placements: [],
                 offer: [],
                 startingCountry: null,
@@ -193,18 +207,12 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                     let roundEarnings = 0;
 
                     // Calculate Journey Cost
-                    if (choices.length > 0) {
-                        try {
-                            // Path: Start -> Choice 1 (-> Choice 2) -> Dest
-                            // We need to order choices? Or optimal?
-                            // optimize: try permutations if 2 choices
-                            // Rules: "...to the first chosen country... then to the second..."
-                            // Usually player decides order. default: order of selection?
-                            // Let's assume order of selection or just greedy sort?
-                            // `findMultiStagePath` signature: (stops[], graph) -> path
-                            // We treat all choices as waypoints including start and dest.
+                    // Filter out SPACE_40 for travel path
+                    const travelDestinations = choices.filter(c => c !== 'SPACE_40');
 
-                            const fullPath = [start, ...choices];
+                    if (travelDestinations.length > 0) {
+                        try {
+                            const fullPath = [start, ...travelDestinations];
                             if (dest) fullPath.push(dest);
 
                             const path = findMultiStagePath(fullPath, EUROPE_GRAPH);
@@ -221,26 +229,26 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                         } catch (e) {
                             console.error("Pathfinding failed", e);
                         }
-                    } else {
-                        // Penalty for no move? If not Space 40?
-                        // Rules usually force a move or pass. 
-                        // If empty, maybe assume skipped/forgot? 
-                        // For now, 0 cost if nothing selected (maybe they ran out of money?)
                     }
 
-                    // Stacking Penalty (Only for non-Space40 choices)
-                    if (!choices.includes('SPACE_40')) {
-                        choices.forEach(cid => {
-                            const tokensOnCountry = state.placements.filter(p => p.countryId === cid);
-                            if (tokensOnCountry.length > 1) {
-                                if (isFinale) {
-                                    roundEarnings -= 10;
-                                } else {
-                                    roundCost += 10;
-                                }
-                            }
-                        });
+                    // Base Cost for Space 40
+                    if (choices.includes('SPACE_40')) {
+                        roundCost += 40;
                     }
+
+                    // Stacking Penalty (Check ALL choices, including SPACE_40)
+                    choices.forEach(cid => {
+                        // Check if anyone else has a token here (including past rounds if we wanted, but currently placements has all)
+                        // 'placements' includes current selections.
+                        const tokensOnCountry = state.placements.filter(p => p.countryId === cid);
+                        if (tokensOnCountry.length > 1) {
+                            if (isFinale) {
+                                roundEarnings -= 10;
+                            } else {
+                                roundCost += 10;
+                            }
+                        }
+                    });
 
                     if (isFinale) {
                         player.money += roundEarnings;
@@ -291,6 +299,8 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             // For simplicity: If already selected, remove it (toggle). If not, add if < max.
 
             let newSelections = [...playerSelections];
+
+            // Standard toggle logic for all selections, including SPACE_40
             if (newSelections.includes(countryId)) {
                 newSelections = newSelections.filter(c => c !== countryId);
             } else if (newSelections.length < maxSelections) {

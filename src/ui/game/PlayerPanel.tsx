@@ -4,6 +4,8 @@ export function PlayerPanel() {
     const players = useGameStore(state => state.players);
     const selections = useGameStore(state => state.currentSelections);
     const round = useGameStore(state => state.round);
+    const activePlayerId = useGameStore(state => state.activePlayerId);
+    const dispatch = useGameStore(state => state.dispatch);
     const playerIds = Object.keys(players);
 
     if (playerIds.length === 0) return null;
@@ -22,17 +24,27 @@ export function PlayerPanel() {
         }}>
             {playerIds.map(id => {
                 const p = players[id];
+                const isActive = id === activePlayerId;
+
                 return (
-                    <div key={id} style={{
-                        background: 'white',
-                        padding: '1rem',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                        borderTop: `4px solid ${p.color}`,
-                        minWidth: '120px',
-                        pointerEvents: 'auto'
-                    }}>
-                        <div style={{ fontWeight: 'bold' }}>{p.name}</div>
+                    <div
+                        key={id}
+                        onClick={() => dispatch({ type: 'SET_ACTIVE_PLAYER', payload: id })}
+                        style={{
+                            background: isActive ? '#fff' : 'rgba(255,255,255,0.8)',
+                            padding: '1rem',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                            borderTop: `4px solid ${p.color}`,
+                            border: isActive ? `2px solid ${p.color}` : '2px solid transparent',
+                            transform: isActive ? 'translateY(-10px)' : 'none',
+                            transition: 'all 0.2s',
+                            minWidth: '120px',
+                            pointerEvents: 'auto',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        <div style={{ fontWeight: 'bold' }}>{p.name} {isActive && '(Active)'}</div>
                         <div style={{ fontSize: '1.2em', color: '#10b981' }}>{p.money} €</div>
                         <div style={{ fontSize: '0.8em', color: '#666' }}>
                             Tokens: {p.tokens.remaining}

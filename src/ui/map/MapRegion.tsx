@@ -18,17 +18,20 @@ export function MapRegion({ geo, isStart, isDest, isOffer, tokensHere, onHoverCo
         offer,
         startingCountry,
         phase,
-        players
+        players,
+        activePlayerId
     } = useGameStore(state => state);
 
-    // For now, grabbing first player again - TODO: real turn management
-    const activePlayerId = Object.keys(players)[0];
+    // activePlayerId is now managed globally
+    // const activePlayerId = Object.keys(players)[0];
 
     const handleClick = () => {
         const geoId = geo.id;
         if (phase !== 'TRAVEL_PLANNING') return;
 
         if (offer.includes(geoId)) {
+            if (!activePlayerId) return;
+
             dispatch({
                 type: 'PLACE_TOKEN',
                 payload: { playerId: activePlayerId, countryId: geoId }

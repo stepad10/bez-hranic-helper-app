@@ -25,7 +25,7 @@ export function GameControls() {
         const requiredSelections = round <= 2 ? 1 : 2;
         return Object.keys(players).every(pid => {
             const playerSelections = selections[pid] || [];
-            return playerSelections.length === requiredSelections;
+            return playerSelections.includes('SPACE_40') || playerSelections.length === requiredSelections;
         });
     };
 
@@ -66,19 +66,7 @@ export function GameControls() {
                         }}>
                         Finish Round & Evaluate
                     </button>
-                    <button
-                        onClick={() => dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p1', countryId: 'SPACE_40' } })}
-                        style={{
-                            padding: '0.5rem 1rem',
-                            background: (selections['p1'] || []).includes('SPACE_40') ? '#475569' : '#64748b',
-                            border: (selections['p1'] || []).includes('SPACE_40') ? '2px solid #fbbf24' : 'none',
-                            color: 'white',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '0.9em'
-                        }}>
-                        Space 40 (Pass - 40€)
-                    </button>
+
                 </div>
             )}
 
