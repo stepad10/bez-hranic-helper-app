@@ -5,6 +5,7 @@ import { useGameStore } from "../../store/gameStore";
 import { MapRegion } from "./MapRegion";
 import { MapTokens } from "./MapTokens";
 import { SeaRoutes } from "./SeaRoutes";
+import { PlayerPaths } from "./PlayerPaths";
 
 const geoUrl = europeTopo;
 
@@ -14,11 +15,38 @@ function GeoMap(): JSX.Element {
         startingCountry,
         destinationCountry,
         placements,
-        settings
+        settings,
+        phase
     } = useGameStore(state => state);
 
     // Hover state for cost preview
     const [hoveredCost, setHoveredCost] = useState<{ total: number, breakdown: any } | null>(null);
+
+    // Map Hidden State for Travel Planning
+    if (phase === 'TRAVEL_PLANNING') {
+        return (
+            <div style={{
+                position: 'relative', width: "100%", height: "100vh",
+                background: "#0f172a",
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center',
+                color: 'white', overflow: "hidden"
+            }}>
+                <div style={{
+                    fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem',
+                    textTransform: 'uppercase', letterSpacing: '2px',
+                    textShadow: '0 4px 10px rgba(0,0,0,0.5)'
+                }}>
+                    Map Hidden
+                </div>
+                <div style={{ fontSize: '1rem', opacity: 0.7, maxWidth: '400px', textAlign: 'center', lineHeight: '1.5' }}>
+                    Consult the "Offer" cards on the right.
+                    <br />
+                    Rely on your knowledge of Europe's geography!
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div style={{ position: 'relative', width: "100%", height: "100vh", background: "#f0f8ff", overflow: "hidden" }}>
@@ -49,8 +77,6 @@ function GeoMap(): JSX.Element {
                                 {/* Sea Routes Layer (Underneath Countries) */}
                                 <SeaRoutes geographies={geographies} />
 
-
-
                                 {geographies.map((geo) => {
                                     const geoId = geo.id;
                                     const isStart = geoId === startingCountry;
@@ -70,6 +96,9 @@ function GeoMap(): JSX.Element {
                                         />
                                     );
                                 })}
+
+                                {/* Player Paths for Scoring Verification (Round End) - Overlaid on Countries */}
+                                <PlayerPaths geographies={geographies} />
 
                                 {/* Labels & Tokens Overlay */}
                                 {geographies.map((geo) => {

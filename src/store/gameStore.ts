@@ -11,10 +11,12 @@ interface GameStore extends GameState {
         map: 'europe';
     };
     activePlayerId: string | null;
+    highlightedPlayerId: string | null; // For visualization
     roundHistory: RoundSummary[];
     dispatch: (action: GameAction |
     { type: 'UPDATE_SETTINGS', payload: Partial<GameStore['settings']> } |
-    { type: 'SET_ACTIVE_PLAYER', payload: string }
+    { type: 'SET_ACTIVE_PLAYER', payload: string } |
+    { type: 'SET_HIGHLIGHTED_PLAYER', payload: string | null }
     ) => void;
 }
 
@@ -26,6 +28,7 @@ export interface RoundSummary {
         space40Cost: number;
         totalCost: number;
         totalEarnings?: number; // For Round 7
+        path: CountryId[] | null; // The actual path taken
     }>;
 }
 
@@ -46,6 +49,7 @@ const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
         map: 'europe'
     },
     activePlayerId: null,
+    highlightedPlayerId: null,
     roundHistory: []
 };
 
@@ -94,6 +98,13 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             return {
                 ...state,
                 activePlayerId: action.payload
+            };
+        }
+
+        case 'SET_HIGHLIGHTED_PLAYER': {
+            return {
+                ...state,
+                highlightedPlayerId: action.payload
             };
         }
 
@@ -235,6 +246,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                     let stackingPenalty = 0;
                     let space40Cost = 0;
                     let roundEarnings = 0;
+                    let calculatedPath: CountryId[] | null = null;
 
                     // Calculate Journey Cost
                     // Filter out SPACE_40 for travel path
@@ -248,6 +260,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                             const path = findMultiStagePath(fullPath, EUROPE_GRAPH);
 
                             if (path) {
+                                calculatedPath = path;
                                 // Pass fullPath as waypoints for Neighbor Penalty calculation
                                 const cost = calculateJourneyCost(path, EUROPE_GRAPH, fullPath);
                                 if (isFinale) {
@@ -293,7 +306,8 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                         stackingPenalty,
                         space40Cost,
                         totalCost,
-                        totalEarnings: isFinale ? roundEarnings : undefined
+                        totalEarnings: isFinale ? roundEarnings : undefined,
+                        path: calculatedPath
                     };
 
                     // Consume token
@@ -317,8 +331,6 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 phase: nextPhase,
                 players: updatedPlayers,
                 offer: [],
-                startingCountry: null,
-                destinationCountry: null,
                 discard: [...state.discard, ...usedCards],
                 currentSelections: {},
                 roundHistory: [...state.roundHistory, currentRoundSummary]

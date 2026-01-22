@@ -59,7 +59,7 @@ export function SeaRoutes({ geographies }: SeaRoutesProps) {
                     strokeWidth={1.5}
                     strokeDasharray="4 4"
                     strokeLinecap="round"
-                    style={{ pointerEvents: "none" }}
+                    style={{ pointerEvents: "none", opacity: 0.5 }}
                 />
             ))}
         </g>

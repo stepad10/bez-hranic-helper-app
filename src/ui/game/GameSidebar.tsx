@@ -199,6 +199,7 @@ function LegendItem({ color, border, label, type = 'box' }: { color: string, bor
 
 function HistoryLog({ players }: { players: any }) {
     const history = useGameStore(state => state.roundHistory);
+    const highlightedPlayerId = useGameStore(state => state.highlightedPlayerId);
 
     if (!history || history.length === 0) return null;
 
@@ -217,12 +218,45 @@ function HistoryLog({ players }: { players: any }) {
                                 const pVal = summary.players[pid];
                                 const pName = players[pid]?.name || pid;
                                 const pColor = players[pid]?.color || '#333';
+                                const path = pVal.path;
+
+                                const isHighlighted = highlightedPlayerId === pid;
 
                                 return (
-                                    <div key={pid} style={{ borderLeft: `3px solid ${pColor}`, paddingLeft: '0.5rem' }}>
+                                    <div
+                                        key={pid}
+                                        style={{
+                                            borderLeft: `3px solid ${pColor}`,
+                                            paddingLeft: '0.5rem',
+                                            paddingRight: '0.5rem',
+                                            paddingTop: '0.25rem',
+                                            paddingBottom: '0.25rem',
+                                            cursor: 'pointer',
+                                            background: isHighlighted ? 'rgba(0,0,0,0.05)' : 'transparent',
+                                            transition: 'background 0.2s',
+                                            borderRadius: '0 4px 4px 0'
+                                        }}
+                                    >
                                         <div style={{ fontWeight: 'bold' }}>{pName}</div>
+
+                                        {/* Path Visualization */}
+                                        {path && path.length > 0 && (
+                                            <div style={{ fontSize: '0.8rem', color: '#666', margin: '0.25rem 0', fontFamily: 'monospace' }}>
+                                                {path.map((cid, i) => (
+                                                    <span key={i}>
+                                                        {cid}
+                                                        {i < path.length - 1 && (
+                                                            <span style={{ color: '#aaa', margin: '0 4px' }}>
+                                                                -(10)→
+                                                            </span>
+                                                        )}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+
                                         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '0.25rem', color: '#555' }}>
-                                            {pVal.journeyCost > 0 && <span>Travel: -{pVal.journeyCost}€</span>}
+                                            {pVal.journeyCost > 0 && <span>Travel Total: -{pVal.journeyCost}€</span>}
                                             {pVal.space40Cost > 0 && <span>Space 40: -{pVal.space40Cost}€</span>}
                                             {pVal.stackingPenalty > 0 && <span>Stacking: -{pVal.stackingPenalty}€</span>}
                                             {pVal.totalEarnings !== undefined ? (
