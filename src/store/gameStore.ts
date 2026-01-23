@@ -9,6 +9,7 @@ interface GameStore extends GameState {
         showTravelCosts: boolean;
         mapStyle: 'blank' | 'codes';
         map: 'europe';
+        stackingRule: 'ordered' | 'none';
     };
     activePlayerId: string | null;
     highlightedPlayerId: string | null; // For visualization
@@ -34,7 +35,7 @@ export interface RoundSummary {
 
 const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     round: 1,
-    phase: 'SETUP',
+    phase: 'MENU',
     players: {},
     offer: [],
     startingCountry: null,
@@ -46,7 +47,8 @@ const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     settings: {
         showTravelCosts: true,
         mapStyle: 'blank',
-        map: 'europe'
+        map: 'europe',
+        stackingRule: 'none' // Default: No stacking penalties (Pass 'n Play friendly)
     },
     activePlayerId: null,
     highlightedPlayerId: null,
@@ -84,6 +86,13 @@ const shuffle = <T>(array: T[]): T[] => {
 // Pure Reducer Function for State Logic
 function reducer(state: GameStore, action: any): Partial<GameStore> {
     switch (action.type) {
+        case 'ENTER_SETUP': {
+            return {
+                ...state,
+                phase: 'SETUP'
+            };
+        }
+
         case 'UPDATE_SETTINGS': {
             return {
                 ...state,
@@ -281,11 +290,18 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
 
                     // Stacking Penalty (Check ALL choices, including SPACE_40)
                     choices.forEach(cid => {
-                        // Check if anyone else has a token here (including past rounds if we wanted, but currently placements has all)
-                        // 'placements' includes current selections.
                         const tokensOnCountry = state.placements.filter(p => p.countryId === cid);
-                        if (tokensOnCountry.length > 1) {
-                            stackingPenalty += 10;
+
+                        // Sort by timestamp (asc) to determine who was first
+                        tokensOnCountry.sort((a, b) => a.timestamp - b.timestamp);
+
+                        // If rule is 'none', no penalty ever.
+                        // If rule is 'ordered' (default), first player is safe, others pay.
+                        if (state.settings.stackingRule === 'ordered') {
+                            const myIndex = tokensOnCountry.findIndex(p => p.playerId === pid);
+                            if (myIndex > 0) {
+                                stackingPenalty += 10;
+                            }
                         }
                     });
 
@@ -360,17 +376,23 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 newSelections.push(countryId);
             }
 
+            // Create new placements, preserving timestamps for existing selections
+            const currentPlayerPlacements = state.placements.filter(p => p.playerId === playerId);
+            const newPlacements = newSelections.map(cid => {
+                const existing = currentPlayerPlacements.find(p => p.countryId === cid);
+                return existing ? existing : { playerId, countryId: cid, timestamp: Date.now() };
+            });
+
             return {
                 ...state,
                 currentSelections: {
                     ...state.currentSelections,
                     [playerId]: newSelections
                 },
-                // Update placements for visual feedback (Showing tokens on map)
-                // We re-generate placements from all players' current selections
+                // Update placements
                 placements: [
                     ...state.placements.filter(p => p.playerId !== playerId), // Remove old for this player
-                    ...newSelections.map(cid => ({ playerId, countryId: cid, timestamp: Date.now() }))
+                    ...newPlacements
                 ]
             };
         }

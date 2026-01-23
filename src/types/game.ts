@@ -2,7 +2,8 @@ export type PlayerId = string;
 export type CountryId = string;
 
 export type RoundPhase =
-    | 'SETUP' // Initial screen
+    | 'MENU' // Top level menu
+    | 'SETUP' // Initial setup screen
     | 'DEALING'
     | 'TRAVEL_PLANNING'
     | 'EVALUATION'
@@ -58,8 +59,10 @@ export interface GameState {
 
 // Discriminated Union for Actions - Reducer Pattern ready
 export type GameAction =
+    | { type: 'ENTER_SETUP' }
     | { type: 'START_GAME'; payload: { playerIds: string[] } }
     | { type: 'DEAL_ROUND'; payload: { round: number } } // Handles shuffling if needed, drawing 7+1 cards
     | { type: 'PLACE_TOKEN'; payload: { playerId: PlayerId; countryId: CountryId | 'SPACE_40' } }
     | { type: 'RESOLVE_ROUND'; } // Triggers evaluation logic
     | { type: 'UPDATE_MONEY'; payload: { playerId: PlayerId; amount: number; operation: 'add' | 'subtract' } };
+
