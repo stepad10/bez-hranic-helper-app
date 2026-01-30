@@ -22,7 +22,7 @@ describe('Pathfinding', () => {
 
     it('should handle sea connections (IT -> GR)', () => {
         const path = findShortestPath('IT', 'GR', EUROPE_GRAPH);
-        expect(path).toEqual(['IT', 'GR']);
+        expect(path).toEqual(['IT', 'MT', 'GR']);
     });
 
     it('should calculate cost correctly for direct neighbors', () => {
@@ -66,8 +66,15 @@ describe('Multi-Stage Pathfinding', () => {
     });
 
     it('should return empty if any segment is unreachable', () => {
-        // PT -> IS (Iceland, disconnected for LAND path usually, but IS has no neighbors in graph atm)
-        const path = findMultiStagePath(['PT', 'IS'], EUROPE_GRAPH);
-        expect(path).toEqual([]); // IS has no neighbors, so unreachable
+        // Mock Graph with isolated node
+        const MOCK_GRAPH: any = {
+            A: { id: 'A', neighbors: [{ target: 'B', type: 'LAND' }] },
+            B: { id: 'B', neighbors: [{ target: 'A', type: 'LAND' }] },
+            C: { id: 'C', neighbors: [] } // Isolated
+        };
+
+        // A -> C (Unreachable)
+        const path = findMultiStagePath(['A', 'C'], MOCK_GRAPH);
+        expect(path).toEqual([]);
     });
 });

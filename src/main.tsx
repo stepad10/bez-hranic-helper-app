@@ -1,9 +1,7 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
+/* @refresh reload */
+import { render } from 'solid-js/web'
 
-createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <App />
-    </StrictMode>,
-);
+import App from './App'
+
+render(() => <App />, document.getElementById('root')!)
+    ;

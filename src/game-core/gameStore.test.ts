@@ -1,13 +1,18 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useGameStore } from '../store/gameStore';
+import { gameStore, setGameStore, dispatch, INITIAL_STATE } from '../store/gameStore';
+import { reconcile } from 'solid-js/store';
 
-// We need to bypass Zustand's hook rules for direct verification in tests
-// For pure logic testing, we can check the reducer logic or integration via store methods
-// Since useGameStore is a hook, we access the vanilla store via .getState()
+// We access the SolidJS store directly for testing
 
 describe('Game Rules: Stacking Penalty', () => {
     beforeEach(() => {
-        useGameStore.setState({
+        // Reset to initial state
+        setGameStore(reconcile({
+            ...INITIAL_STATE,
+            dispatch: (action: any) => dispatch(action)
+        }));
+
+        setGameStore({
             round: 1,
             phase: 'TRAVEL_PLANNING',
             players: {
@@ -15,6 +20,7 @@ describe('Game Rules: Stacking Penalty', () => {
                 p2: { id: 'p2', name: 'P2', money: 100, color: 'blue', tokens: { remaining: 1, placed: false } }
             },
             offer: ['AUT', 'CZE'],
+            startingCountry: 'DE',
             placements: [],
             currentSelections: {},
             settings: {
@@ -28,30 +34,27 @@ describe('Game Rules: Stacking Penalty', () => {
     });
 
     it('Standard Rule: First player pays 0, Second player pays 10', () => {
-        const store = useGameStore.getState();
-
         // P1 selects AUT first
-        store.dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p1', countryId: 'AUT' } });
+        dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p1', countryId: 'AUT' } });
 
         // Advance time slightly to ensure diff timestamps (though usually not needed if seq)
         // Manual override for test stability:
-        let s = useGameStore.getState();
-        const newPlacements1 = [...s.placements];
+        let newPlacements1 = [...gameStore.placements];
+        // Ensure first placement has earlier timestamp if it was updated too fast
         newPlacements1[0] = { ...newPlacements1[0], timestamp: 1000 };
-        useGameStore.setState({ ...s, placements: newPlacements1 });
+        setGameStore({ placements: newPlacements1 });
 
         // P2 selects AUT later
-        store.dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p2', countryId: 'AUT' } });
+        dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p2', countryId: 'AUT' } });
 
-        s = useGameStore.getState();
-        const newPlacements2 = [...s.placements];
+        let newPlacements2 = [...gameStore.placements];
         newPlacements2[1] = { ...newPlacements2[1], timestamp: 2000 };
-        useGameStore.setState({ ...s, placements: newPlacements2 });
+        setGameStore({ placements: newPlacements2 });
 
         // Resolve Round
-        store.dispatch({ type: 'RESOLVE_ROUND' });
+        dispatch({ type: 'RESOLVE_ROUND' });
 
-        const history = useGameStore.getState().roundHistory[0];
+        const history = gameStore.roundHistory[0];
         const p1Res = history.players.p1;
         const p2Res = history.players.p2;
 
@@ -60,21 +63,17 @@ describe('Game Rules: Stacking Penalty', () => {
     });
 
     it('Addon Rule (None): Both players pay 0', () => {
-        useGameStore.setState({
-            settings: { ...useGameStore.getState().settings, stackingRule: 'none' }
-        });
-
-        const store = useGameStore.getState();
+        setGameStore('settings', (s) => ({ ...s, stackingRule: 'none' }));
 
         // P1 selects AUT
-        store.dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p1', countryId: 'AUT' } });
+        dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p1', countryId: 'AUT' } });
         // P2 selects AUT
-        store.dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p2', countryId: 'AUT' } });
+        dispatch({ type: 'PLACE_TOKEN', payload: { playerId: 'p2', countryId: 'AUT' } });
 
         // Resolve Round
-        store.dispatch({ type: 'RESOLVE_ROUND' });
+        dispatch({ type: 'RESOLVE_ROUND' });
 
-        const history = useGameStore.getState().roundHistory[0];
+        const history = gameStore.roundHistory[0];
 
         expect(history.players.p1.stackingPenalty).toBe(0);
         expect(history.players.p2.stackingPenalty).toBe(0);
