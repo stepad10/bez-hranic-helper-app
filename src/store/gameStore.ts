@@ -17,16 +17,3 @@ export const [gameStore, setGameStore] = createStore<GameStore>({
 export const dispatch = (action: GameAction) => {
     setGameStore((state) => reducer(state, action));
 };
-
-declare global {
-    interface Window {
-        gameStore: typeof gameStore;
-        setGameStore: typeof setGameStore;
-    }
-}
-
-// Debug helper
-if (typeof window !== "undefined") {
-    window.gameStore = gameStore;
-    window.setGameStore = setGameStore;
-}
