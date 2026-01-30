@@ -1,8 +1,6 @@
-import { useGameStore } from '../../store/gameStore';
+import { dispatch } from '../../store/gameStore';
 
 export function WelcomeScreen() {
-    const dispatch = useGameStore(state => state.dispatch);
-
     const handlePassNPlay = () => {
         dispatch({ type: 'ENTER_SETUP' });
     };
@@ -15,24 +13,24 @@ export function WelcomeScreen() {
     return (
         <div style={{
             position: 'absolute',
-            top: 0, left: 0, right: 0, bottom: 0,
+            top: "0", left: "0", right: "0", bottom: "0",
             background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
+            "flex-direction": 'column',
+            "align-items": 'center',
+            "justify-content": 'center',
             color: 'white',
-            zIndex: 1000
+            "z-index": 1000
         }}>
-            <h1 style={{ fontSize: '4rem', marginBottom: '4rem', textShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
+            <h1 style={{ "font-size": '4rem', "margin-bottom": '4rem', "text-shadow": '0 4px 6px rgba(0,0,0,0.3)' }}>
                 Without Borders
             </h1>
 
             <div style={{
                 display: 'flex',
-                flexDirection: 'column',
+                "flex-direction": 'column',
                 gap: '1.5rem',
-                minWidth: '300px'
+                "min-width": '300px'
             }}>
                 <button
                     onClick={handlePassNPlay}
@@ -41,15 +39,15 @@ export function WelcomeScreen() {
                         background: '#3b82f6',
                         color: 'white',
                         border: 'none',
-                        borderRadius: '12px',
-                        fontSize: '1.5rem',
-                        fontWeight: 'bold',
+                        "border-radius": '12px',
+                        "font-size": '1.5rem',
+                        "font-weight": 'bold',
                         cursor: 'pointer',
-                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                        "box-shadow": '0 4px 6px rgba(0,0,0,0.1)',
                         transition: 'transform 0.1s',
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        "align-items": 'center',
+                        "justify-content": 'center',
                         gap: '10px'
                     }}
                     onMouseDown={e => e.currentTarget.style.transform = 'scale(0.98)'}
@@ -65,15 +63,15 @@ export function WelcomeScreen() {
                         background: 'rgba(255,255,255,0.1)',
                         color: '#94a3b8',
                         border: '2px dashed #475569',
-                        borderRadius: '12px',
-                        fontSize: '1.5rem',
-                        fontWeight: 'bold',
+                        "border-radius": '12px',
+                        "font-size": '1.5rem',
+                        "font-weight": 'bold',
                         cursor: 'not-allowed', // Changed to help user understand it's not ready
-                        boxShadow: 'none',
+                        "box-shadow": 'none',
                         transition: 'transform 0.1s',
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        "align-items": 'center',
+                        "justify-content": 'center',
                         gap: '10px'
                     }}
                 >
@@ -81,7 +79,7 @@ export function WelcomeScreen() {
                 </button>
             </div>
 
-            <p style={{ marginTop: '3rem', color: '#64748b', fontSize: '0.9rem' }}>
+            <p style={{ "margin-top": '3rem', color: '#64748b', "font-size": '0.9rem' }}>
                 v1.0.0 Alpha
             </p>
         </div>

@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { Line } from 'react-simple-maps';
+import { createMemo, For } from 'solid-js';
+import { Line } from 'solidjs-simple-maps';
 import { geoCentroid } from 'd3-geo';
 import { EUROPE_GRAPH } from '../../data/europeGraph';
 import { CountryId } from '../../types/game';
@@ -8,12 +8,12 @@ interface SeaRoutesProps {
     geographies: any[];
 }
 
-export function SeaRoutes({ geographies }: SeaRoutesProps) {
-    const routes = useMemo(() => {
+export function SeaRoutes(props: SeaRoutesProps) {
+    const routes = createMemo(() => {
         const countryCentroids: Record<string, [number, number]> = {};
 
         // 1. Calculate centroids for all visible countries
-        geographies.forEach(geo => {
+        props.geographies.forEach(geo => {
             const centroid = geoCentroid(geo);
             const id = geo.id as CountryId;
             if (id && centroid) {
@@ -46,22 +46,23 @@ export function SeaRoutes({ geographies }: SeaRoutesProps) {
         });
 
         return lines;
-    }, [geographies]);
+    });
 
     return (
         <g>
-            {routes.map(route => (
-                <Line
-                    key={route.key}
-                    from={route.from}
-                    to={route.to}
-                    stroke="#3b82f6"
-                    strokeWidth={1.5}
-                    strokeDasharray="4 4"
-                    strokeLinecap="round"
-                    style={{ pointerEvents: "none", opacity: 0.5 }}
-                />
-            ))}
+            <For each={routes()}>
+                {route => (
+                    <Line
+                        from={route.from as any}
+                        to={route.to as any}
+                        stroke="#3b82f6"
+                        stroke-width={1.5}
+                        stroke-dasharray="4 4"
+                        stroke-linecap="round"
+                        class="sea-route"
+                    />
+                )}
+            </For>
         </g>
     );
 }

@@ -1,110 +1,114 @@
-import { useGameStore } from "../../store/gameStore";
+import { gameStore, dispatch } from "../../store/gameStore";
 import { EUROPE_GRAPH } from "../../data/europeGraph";
+import { createMemo, For, Show } from "solid-js";
 
 export function CardOffer() {
-    const offer = useGameStore(state => state.offer);
-    const startingCountry = useGameStore(state => state.startingCountry);
-    const destinationCountry = useGameStore(state => state.destinationCountry);
-    const activePlayerId = useGameStore(state => state.activePlayerId);
-    const selections = useGameStore(state => state.currentSelections);
-    const players = useGameStore(state => state.players);
-    const dispatch = useGameStore(state => state.dispatch);
-    const phase = useGameStore(state => state.phase);
-
     // Helpers to get name from ID
     const getName = (id: string | null) => id ? (EUROPE_GRAPH[id]?.name || id) : '';
 
+    const offerItems = createMemo(() => [...gameStore.offer, 'SPACE_40']);
+
     return (
-        <div className="card-offer" style={{
+        <div class="card-offer" style={{
             position: 'absolute',
-            top: 20,
+            top: "20px",
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            "flex-direction": 'column',
+            "align-items": 'center',
             gap: '1rem',
-            zIndex: 100,
-            pointerEvents: 'none'
+            "z-index": 100,
+            "pointer-events": 'none'
         }}>
             {/* Start / Destination Center Cards */}
-            <div style={{ display: 'flex', gap: '2rem', pointerEvents: 'auto' }}>
-                {startingCountry && (
+            <div style={{ display: 'flex', gap: '2rem', "pointer-events": 'auto' }}>
+                <Show when={gameStore.startingCountry}>
                     <div style={{
-                        background: '#fff', padding: '0.5rem 1rem', borderRadius: '8px',
-                        border: '2px solid #22c55e', boxShadow: '0 4px 6px rgba(0,0,0,0.2)',
-                        textAlign: 'center'
+                        background: '#fff', padding: '0.5rem 1rem', "border-radius": '8px',
+                        border: '2px solid #22c55e', "box-shadow": '0 4px 6px rgba(0,0,0,0.2)',
+                        "text-align": 'center'
                     }}>
-                        <div style={{ fontSize: '0.7em', textTransform: 'uppercase', color: '#666' }}>Start</div>
-                        <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>{getName(startingCountry)}</div>
+                        <div style={{ "font-size": '0.7em', "text-transform": 'uppercase', color: '#666' }}>Start</div>
+                        <div style={{ "font-weight": 'bold', "font-size": '1.2em' }}>{getName(gameStore.startingCountry)}</div>
                     </div>
-                )}
+                </Show>
 
-                {destinationCountry && (
+                <Show when={gameStore.destinationCountry}>
                     <div style={{
-                        background: '#fff', padding: '0.5rem 1rem', borderRadius: '8px',
-                        border: '2px solid #ef4444', boxShadow: '0 4px 6px rgba(0,0,0,0.2)',
-                        textAlign: 'center'
+                        background: '#fff', padding: '0.5rem 1rem', "border-radius": '8px',
+                        border: '2px solid #ef4444', "box-shadow": '0 4px 6px rgba(0,0,0,0.2)',
+                        "text-align": 'center'
                     }}>
-                        <div style={{ fontSize: '0.7em', textTransform: 'uppercase', color: '#666' }}>Destination</div>
-                        <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>{getName(destinationCountry)}</div>
+                        <div style={{ "font-size": '0.7em', "text-transform": 'uppercase', color: '#666' }}>Destination</div>
+                        <div style={{ "font-weight": 'bold', "font-size": '1.2em' }}>{getName(gameStore.destinationCountry)}</div>
                     </div>
-                )}
+                </Show>
             </div>
 
             {/* Offer Bar */}
-            {offer.length > 0 && (
+            <Show when={gameStore.offer.length > 0}>
                 <div style={{
                     display: 'flex', gap: '0.5rem',
-                    background: 'rgba(255,255,255,0.9)', padding: '0.5rem', borderRadius: '12px',
-                    pointerEvents: 'auto'
+                    background: 'rgba(255,255,255,0.9)', padding: '0.5rem', "border-radius": '12px',
+                    "pointer-events": 'auto'
                 }}>
-                    {[...offer, 'SPACE_40'].map(countryId => {
-                        const isSpace40 = countryId === 'SPACE_40';
-                        const isSelected = activePlayerId && (selections[activePlayerId] || []).includes(countryId);
+                    <For each={offerItems()}>
+                        {(countryId) => {
+                            const isSpace40 = countryId === 'SPACE_40';
+                            // Reactive checking of selection
+                            const isSelected = () => gameStore.activePlayerId && (gameStore.currentSelections[gameStore.activePlayerId] || []).includes(countryId);
 
-                        // Find all players who selected this
-                        const selectingPlayers = Object.keys(selections)
-                            .filter(pid => selections[pid]?.includes(countryId))
-                            .map(pid => players[pid]);
+                            // Find all players who selected this
+                            const selectingPlayers = createMemo(() => Object.keys(gameStore.currentSelections)
+                                .filter(pid => gameStore.currentSelections[pid]?.includes(countryId))
+                                .map(pid => gameStore.players[pid]));
 
-                        return (
-                            <div
-                                key={countryId}
-                                onClick={() => {
-                                    if (activePlayerId && phase === 'TRAVEL_PLANNING') {
-                                        dispatch({ type: 'PLACE_TOKEN', payload: { playerId: activePlayerId, countryId } });
-                                    }
-                                }}
-                                style={{
-                                    background: isSelected ? '#eff6ff' : 'white',
-                                    border: isSelected ? '2px solid #3b82f6' : '1px solid #ddd',
-                                    borderRadius: '6px',
-                                    padding: '0.5rem', minWidth: '80px', textAlign: 'center',
-                                    cursor: (activePlayerId && phase === 'TRAVEL_PLANNING') ? 'pointer' : 'default',
-                                    position: 'relative',
-                                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem'
-                                }}>
-                                <div style={{ fontWeight: isSelected ? 'bold' : 'normal' }}>
-                                    {isSpace40 ? 'Space 40' : getName(countryId)}
+                            const handleCardClick = () => {
+                                if (gameStore.activePlayerId && gameStore.phase === 'TRAVEL_PLANNING') {
+                                    dispatch({ type: 'PLACE_TOKEN', payload: { playerId: gameStore.activePlayerId, countryId } });
+                                }
+                            };
+
+                            const isClickable = () => gameStore.activePlayerId && gameStore.phase === 'TRAVEL_PLANNING';
+
+                            return (
+                                <div
+                                    onClick={handleCardClick}
+                                    style={{
+                                        background: isSelected() ? '#eff6ff' : 'white',
+                                        border: isSelected() ? '2px solid #3b82f6' : '1px solid #ddd',
+                                        "border-radius": '6px',
+                                        padding: '0.5rem', "min-width": '80px', "text-align": 'center',
+                                        cursor: isClickable() ? 'pointer' : 'default',
+                                        position: 'relative',
+                                        display: 'flex', "flex-direction": 'column', "align-items": 'center', gap: '0.25rem'
+                                    }}>
+                                    <div style={{ "font-weight": isSelected() ? 'bold' : 'normal' }}>
+                                        {isSpace40 ? 'Space 40' : getName(countryId)}
+                                    </div>
+                                    <Show when={isSpace40}>
+                                        <div style={{ "font-size": '0.7em', color: '#666' }}>Pass (-40€)</div>
+                                    </Show>
+
+                                    {/* Player Tokens */}
+                                    <div style={{ display: 'flex', gap: '2px', "margin-top": '2px', "flex-wrap": 'wrap', "justify-content": 'center' }}>
+                                        <For each={selectingPlayers()}>
+                                            {(p) => (
+                                                <div style={{
+                                                    width: '12px', height: '12px', "border-radius": '50%',
+                                                    background: p.color, border: '1px solid white',
+                                                    "box-shadow": '0 1px 2px rgba(0,0,0,0.2)'
+                                                }} title={p.name} />
+                                            )}
+                                        </For>
+                                    </div>
                                 </div>
-                                {isSpace40 && <div style={{ fontSize: '0.7em', color: '#666' }}>Pass (-40€)</div>}
-
-                                {/* Player Tokens */}
-                                <div style={{ display: 'flex', gap: '2px', marginTop: '2px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                                    {selectingPlayers.map(p => (
-                                        <div key={p.id} style={{
-                                            width: '12px', height: '12px', borderRadius: '50%',
-                                            background: p.color, border: '1px solid white',
-                                            boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
-                                        }} title={p.name} />
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        }}
+                    </For>
                 </div>
-            )}
+            </Show>
         </div>
     );
 }

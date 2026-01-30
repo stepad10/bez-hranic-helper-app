@@ -1,5 +1,4 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { createStore } from 'solid-js/store';
 import { GameState, GameAction, CountryId } from '../types/game';
 import { EUROPE_GRAPH } from '../data/europeGraph';
 import { findMultiStagePath, calculateJourneyCost } from '../game-core/pathfinding';
@@ -33,7 +32,7 @@ export interface RoundSummary {
     }>;
 }
 
-const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
+export const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     round: 1,
     phase: 'MENU',
     players: {},
@@ -55,22 +54,21 @@ const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     roundHistory: []
 };
 
-export const useGameStore = create<GameStore>()(
-    devtools(
-        (set) => ({
-            ...INITIAL_STATE,
+// Create SolidJS Store
+export const [gameStore, setGameStore] = createStore<GameStore>({
+    ...INITIAL_STATE,
+    dispatch: (action: any) => dispatch(action)
+});
 
-            dispatch: (action) => {
-                set((state) => reducer(state, action));
-            },
-        }),
-        { name: 'WithoutBordersStore' }
-    )
-);
+// Dispatch function
+export const dispatch = (action: any) => {
+    setGameStore((state) => reducer(state, action));
+};
 
 // Debug helper
 if (typeof window !== 'undefined') {
-    (window as any).gameStore = useGameStore;
+    (window as any).gameStore = gameStore;
+    (window as any).setGameStore = setGameStore;
 }
 
 // Helper to shuffle array
@@ -233,11 +231,12 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             const requiredSelections = state.round <= 2 ? 1 : 2;
             const allReady = Object.keys(state.players).every(pid => {
                 const selections = state.currentSelections[pid] || [];
+                // console.log(`Player ${pid} has ${selections.length} selections, needed ${requiredSelections}`);
                 return selections.length === requiredSelections;
             });
 
             if (!allReady) {
-                console.warn("Attempted to resolve round without all players ready");
+                console.warn("Attempted to resolve round without all players ready. Players:", Object.keys(state.players), "Selections:", state.currentSelections);
                 return state; // No-op if not ready
             }
 
@@ -347,6 +346,8 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 phase: nextPhase,
                 players: updatedPlayers,
                 offer: [],
+                startingCountry: null,
+                destinationCountry: null,
                 discard: [...state.discard, ...usedCards],
                 currentSelections: {},
                 roundHistory: [...state.roundHistory, currentRoundSummary]
