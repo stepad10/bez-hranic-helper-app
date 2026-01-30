@@ -238,3 +238,92 @@ describe("Game Store Logic", () => {
         expect(state.phase).toBe("GAME_END");
     });
 });
+
+describe("Coverage & Edge Cases", () => {
+    beforeEach(() => {
+        setGameStore(
+            reconcile({
+                ...INITIAL_STATE,
+                dispatch: (action: GameAction) => dispatch(action),
+            }),
+        );
+    });
+
+    it("gameStore.dispatch property should call dispatch", () => {
+        // Line 13: dispatch: (action: GameAction) => dispatch(action)
+        // We test this by using the store property
+        gameStore.dispatch({ type: "UPDATE_SETTINGS", payload: { showTravelCosts: false } });
+        expect(gameStore.settings.showTravelCosts).toBe(false);
+    });
+
+    it("reducer: should handle ENTER_SETUP", () => {
+        dispatch({ type: "ENTER_SETUP" });
+        expect(gameStore.phase).toBe("SETUP");
+    });
+
+    it("reducer: should handle UPDATE_SETTINGS", () => {
+        dispatch({ type: "UPDATE_SETTINGS", payload: { mapStyle: "codes" } });
+        expect(gameStore.settings.mapStyle).toBe("codes");
+    });
+
+    it("reducer: should handle SET_ACTIVE_PLAYER", () => {
+        dispatch({ type: "SET_ACTIVE_PLAYER", payload: "p99" });
+        expect(gameStore.activePlayerId).toBe("p99");
+    });
+
+    it("reducer: should handle SET_HIGHLIGHTED_PLAYER", () => {
+        dispatch({ type: "SET_HIGHLIGHTED_PLAYER", payload: "p88" });
+        expect(gameStore.highlightedPlayerId).toBe("p88");
+    });
+
+    it("reducer: PLACE_TOKEN should toggle OFF if already selected (Line 270)", () => {
+        dispatch({ type: "START_GAME", payload: { playerIds: ["p1"] } });
+
+        // Select logic wrapper
+        setGameStore({
+            phase: "TRAVEL_PLANNING",
+            currentSelections: { p1: [] },
+            round: 1,
+        });
+
+        // Toggle ON
+        dispatch({ type: "PLACE_TOKEN", payload: { playerId: "p1", countryId: "CZ" } });
+        expect(gameStore.currentSelections.p1).toContain("CZ");
+
+        // Toggle OFF
+        dispatch({ type: "PLACE_TOKEN", payload: { playerId: "p1", countryId: "CZ" } });
+        expect(gameStore.currentSelections.p1).not.toContain("CZ");
+    });
+
+    it("reducer: default case (Line 328)", () => {
+        // Dispatch unknown action type
+        // Check console to ensure no crash, or state remains same
+        const stateBefore = JSON.stringify(gameStore);
+        dispatch({ type: "UNKNOWN_ACTION" } as unknown as GameAction);
+        const stateAfter = JSON.stringify(gameStore);
+        expect(stateBefore).toBe(stateAfter);
+    });
+
+    it("reducer: DEAL_ROUND 3 should add 200 money", () => {
+        dispatch({ type: "START_GAME", payload: { playerIds: ["p1"] } });
+        // Initial money 100
+        expect(gameStore.players.p1.money).toBe(100);
+
+        dispatch({ type: "DEAL_ROUND", payload: { round: 3 } });
+        // 100 + 200 = 300
+        expect(gameStore.players.p1.money).toBe(300);
+    });
+
+    it("reducer: RESOLVE_ROUND should warn and no-op if players not ready", () => {
+        dispatch({ type: "START_GAME", payload: { playerIds: ["p1"] } });
+        dispatch({ type: "DEAL_ROUND", payload: { round: 1 } }); // requires 1 selection
+
+        // We make NO selections
+        setGameStore({ currentSelections: { p1: [] } });
+
+        dispatch({ type: "RESOLVE_ROUND" });
+
+        // Phase should NOT change
+        expect(gameStore.phase).toBe("TRAVEL_PLANNING");
+    });
+});
