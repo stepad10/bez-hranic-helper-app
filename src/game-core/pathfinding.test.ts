@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { findShortestPath, calculateJourneyCost, findMultiStagePath } from "./pathfinding";
 import { EUROPE_GRAPH, GraphNode } from "../data/europeGraph";
+import { CountryId } from "../types/game";
 
 describe("Pathfinding", () => {
     it("should find direct neighbors", () => {
@@ -78,5 +79,23 @@ describe("Multi-Stage Pathfinding", () => {
         // A -> C (Unreachable)
         const path = findMultiStagePath(["A", "C"], MOCK_GRAPH);
         expect(path).toEqual([]);
+    });
+});
+
+describe("Pathfinding Edge Cases", () => {
+    it("findShortestPath: should handle non-existent start/end nodes safely", () => {
+        // Line 18: const neighbors = graph[currentId]?.neighbors || [];
+        // Helper to check safety if node missing
+        const path = findShortestPath("UNKNOWN" as unknown as CountryId, "DE", EUROPE_GRAPH);
+        expect(path).toEqual([]);
+    });
+
+    it("findMultiStagePath: should return stops if less than 2 stops provided", () => {
+        // Line 35: if (stops.length < 2) return stops;
+        const result = findMultiStagePath(["FR"], EUROPE_GRAPH);
+        expect(result).toEqual(["FR"]);
+
+        const emptyRes = findMultiStagePath([], EUROPE_GRAPH);
+        expect(emptyRes).toEqual([]);
     });
 });
