@@ -24,11 +24,11 @@ Simply read or explain the rules for the first part to the players, and you can 
 
 **The player with the most money at the end of the game wins.**
 
-> *For your first game, you can choose the map that everyone knows better, but this isn't required. For the game, it's enough if players have just a basic idea of the map.*
+> _For your first game, you can choose the map that everyone knows better, but this isn't required. For the game, it's enough if players have just a basic idea of the map._
 
-> *Each player has their own traveler card where they can track the progress of the game. The overview shows the rules and individual parts of the game.*
+> _Each player has their own traveler card where they can track the progress of the game. The overview shows the rules and individual parts of the game._
 
-> *You don't need to complicate your first game by explaining all the rules. It's enough to tell players what the goal of the game is. Each round, they must save as much as possible from their allocated grant.*
+> _You don't need to complicate your first game by explaining all the rules. It's enough to tell players what the goal of the game is. Each round, they must save as much as possible from their allocated grant._
 
 ---
 
@@ -38,19 +38,19 @@ Simply read or explain the rules for the first part to the players, and you can 
 
 Each player chooses one traveler card and two round tokens of the same color and places them in front of themselves on the table. The traveler card contains a game overview on one side and rules for evaluating journeys on the other.
 
-> *It also reminds forgetful players which color is theirs when their tokens set off on their travels.*
+> _It also reminds forgetful players which color is theirs when their tokens set off on their travels._
 
 ### Game Board
 
 Place the game board in the middle of the table so that all players can comfortably reach it.
 
-> *Be kind and push it a bit closer to the smaller ones with shorter arms.*
+> _Be kind and push it a bit closer to the smaller ones with shorter arms._
 
 ### Game Money
 
 Place the game money in an accessible location as the bank.
 
-> *If you don't like anarchy where everyone "grabs" from the common fund as they please, you can choose a banker who will be responsible for distributing and receiving money during the game.*
+> _If you don't like anarchy where everyone "grabs" from the common fund as they please, you can choose a banker who will be responsible for distributing and receiving money during the game._
 
 ### Stones
 
@@ -60,7 +60,7 @@ Prepare four transparent stones. You'll need them for evaluating journeys.
 
 Each map has a corresponding set of cards with individual countries. Shuffle these cards and place them face down in front of one of the players. That player becomes the dealing player for the first round.
 
-> *Who becomes the dealing player doesn't have much impact on the game, so let's leave this choice as a privilege for whoever was kind enough to shuffle the cards.*
+> _Who becomes the dealing player doesn't have much impact on the game, so let's leave this choice as a privilege for whoever was kind enough to shuffle the cards._
 
 ### Map
 
@@ -68,13 +68,13 @@ Show players the chosen map and point out its specifics. Especially that island 
 
 Then fold the map and set it aside for now. **During the game, the map is hidden from players and is only used during evaluation.**
 
-> *Some players might panic at this point. Calm them down – they don't need to know the map precisely. On the contrary, opinions like "South Dakota... that must be somewhere in the south..." make the game more fun and entertaining.*
+> _Some players might panic at this point. Calm them down – they don't need to know the map precisely. On the contrary, opinions like "South Dakota... that must be somewhere in the south..." make the game more fun and entertaining._
 
 ### Other Components
 
 Put the other map and its corresponding cards in the box; you won't need them for now.
 
-> *Unless someone says right after the game ends: "That was great, shall we try the other map?"*
+> _Unless someone says right after the game ends: "That was great, shall we try the other map?"_
 
 ---
 
@@ -84,7 +84,7 @@ Put the other map and its corresponding cards in the box; you won't need them fo
 
 At the beginning of the first part, **each player receives 100 euros**. This money is for the first and second rounds. You won't receive more money until the beginning of the third round.
 
-> *The Without Borders season begins every year at the end of winter, with the allocation of the first money and the announcement of the first two rounds of the project.*
+> _The Without Borders season begins every year at the end of winter, with the allocation of the first money and the announcement of the first two rounds of the project._
 
 ### First and Second Round
 
@@ -94,9 +94,9 @@ Each round of the game is started by the dealing player. They rotate the game bo
 
 Immediately after filling all seven spaces, they place **the eighth card face up in the center of the game board**. This card is called the **starting country card**. Once it's revealed, players choose their destinations.
 
-> *Each round of the project begins with the publication of sponsor countries on the project website. One country is always the main sponsor and becomes the so-called starting country, and seven other countries form the offer for that round.*
+> _Each round of the project begins with the publication of sponsor countries on the project website. One country is always the main sponsor and becomes the so-called starting country, and seven other countries form the offer for that round._
 
-> *All project participants are invited to visit the starting country. From the offered countries, they can then choose one more to visit.*
+> _All project participants are invited to visit the starting country. From the offered countries, they can then choose one more to visit._
 
 #### Choosing Destinations
 
@@ -112,19 +112,19 @@ When placing tokens, players try to choose from the seven countries one that the
 
 They also try to be as fast as possible, because with each token placed at a country earlier, the country becomes less advantageous.
 
-> *Why, you'll see in the Evaluation chapter. The project rules are set up so that you travel a bit, but also don't spend unnecessarily too much.*
+> _Why, you'll see in the Evaluation chapter. The project rules are set up so that you travel a bit, but also don't spend unnecessarily too much._
 
-> *You know, the best options are often taken as soon as the offer is published on the project website.*
+> _You know, the best options are often taken as soon as the offer is published on the project website._
 
 A player may also place their token at **space 40**. This indicates they're not interested in any of the countries. They usually do this when they decide the available countries are too disadvantageous or there are already too many tokens on them. Multiple tokens can also be at this space, and it's also less advantageous here if you place your token on previously placed tokens.
 
-> *Sometimes you'd simply rather return part of the grant than pay for the trip out of your own pocket.*
+> _Sometimes you'd simply rather return part of the grant than pay for the trip out of your own pocket._
 
 **Remember that during this phase, the map is hidden and players may not look at it.**
 
-> *Variant: If you're playing with younger children who don't even have a rough idea of the map, you can leave the map uncovered for their first games. You'll be surprised how quickly they'll learn it. Soon they'll be able to play with the map covered too. And in geography class, they'll be stars!*
+> _Variant: If you're playing with younger children who don't even have a rough idea of the map, you can leave the map uncovered for their first games. You'll be surprised how quickly they'll learn it. Soon they'll be able to play with the map covered too. And in geography class, they'll be stars!_
 
-> *If everyone else has already placed their tokens, it's polite not to delay too much and choose as soon as possible... so everyone can set off on their travels.*
+> _If everyone else has already placed their tokens, it's polite not to delay too much and choose as soon as possible... so everyone can set off on their travels._
 
 #### Evaluation
 
@@ -134,26 +134,26 @@ Take one of the colored stones and place it on the starting country on the map. 
 
 Now calculate how much the player spent on their journey. Each player can choose their own route to make it cost as little as possible.
 
-> *To speed up the game, others can help find the optimal route, but they shouldn't intentionally give bad advice.*
+> _To speed up the game, others can help find the optimal route, but they shouldn't intentionally give bad advice._
 
-> *Some countries are so small that the stone covers them entirely. But it's transparent, so you actually have the country in the stone, instead of the stone in the country.*
+> _Some countries are so small that the stone covers them entirely. But it's transparent, so you actually have the country in the stone, instead of the stone in the country._
 
 **The rules for determining the price are on the back of the help card:**
 
-| Cost | Rule |
-|------|------|
-| **-10** | Each **border crossing** costs the player 10 euros. A crossing means crossing the border between neighboring countries or moving along a marked line across the sea. |
+| Cost    | Rule                                                                                                                                                                                                                                           |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **-10** | Each **border crossing** costs the player 10 euros. A crossing means crossing the border between neighboring countries or moving along a marked line across the sea.                                                                           |
 | **-30** | If the player chose a country that **directly borders** the starting country, they pay an additional 30 euro surcharge (regardless of which route they want to take). Again – countries connected by a sea line are also considered neighbors. |
-| **-10** | Additionally, the player pays a surcharge of **10 euros for each token lying under their token**. |
-| **40** | If the player placed their token at space 40, they don't travel anywhere. They pay only the indicated **40 euros**, plus 10 euros for each token lying under their token. |
+| **-10** | Additionally, the player pays a surcharge of **10 euros for each token lying under their token**.                                                                                                                                              |
+| **40**  | If the player placed their token at space 40, they don't travel anywhere. They pay only the indicated **40 euros**, plus 10 euros for each token lying under their token.                                                                      |
 
-> *So it doesn't matter how far you go, only how many borders you cross. From Azerbaijan to Norway is cheaper than you'd expect.*
+> _So it doesn't matter how far you go, only how many borders you cross. From Azerbaijan to Norway is cheaper than you'd expect._
 
-> *You received money to travel across the world. If you just want to stay in place, you'll have to return part of it.*
+> _You received money to travel across the world. If you just want to stay in place, you'll have to return part of it._
 
-> *Whoever clicks first, travels first – or at least travels cheaper.*
+> _Whoever clicks first, travels first – or at least travels cheaper._
 
-> *Want to enjoy the starting country instead of traveling? Fine, but return part of the grant...*
+> _Want to enjoy the starting country instead of traveling? Fine, but return part of the grant..._
 
 The player **pays the resulting price to the bank**. (If they don't have the full amount, they pay only as much as they have.)
 
@@ -169,13 +169,13 @@ The starting country was France. Players placed their tokens as shown in the pic
 - **Yellow, Blue, and Purple** travel to Hungary, which is three border crossings. Purple pays **50 euros** – there are two more tokens under theirs. Blue pays **40 euros** – there's one more token under theirs. Yellow pays **30 euros**.
 - **Green and White** placed their tokens at space 40. They don't travel anywhere. White pays **50 euros** – standing on another token. Green pays **40 euros**.
 
-> *There was another good choice in the country offer that nobody noticed. Greece looks far away, but through Italy and Malta you can also reach it in three border crossings.*
+> _There was another good choice in the country offer that nobody noticed. Greece looks far away, but through Italy and Malta you can also reach it in three border crossings._
 
 ### End of Round
 
 This ends the round. If players are interested, you can look up the country that was the starting country this round in the included country descriptions and read some interesting facts about it. Among other things, you'll learn what's actually in the picture on the card.
 
-> *Since you've all visited that country, you might as well take away some knowledge from your virtual journey!*
+> _Since you've all visited that country, you might as well take away some knowledge from your virtual journey!_
 
 After evaluation ends, **close the map again**. Set aside the cards from the offer, including the starting country, on a separate pile (face up, so they don't get mixed up). You won't need them until the seventh round.
 
@@ -183,7 +183,7 @@ After evaluation ends, **close the map again**. Set aside the cards from the off
 
 The second round proceeds the same as the first. **However, you don't receive any additional money** – you only have what remained from the first round. If you still have some money left after the second round, that's good for you; you keep it for the following rounds.
 
-> *If you have nothing left after the second round, that's okay. At least you have the good feeling that you used the money you received and traveled nicely.*
+> _If you have nothing left after the second round, that's okay. At least you have the good feeling that you used the money you received and traveled nicely._
 
 ---
 
@@ -193,7 +193,7 @@ The second round proceeds the same as the first. **However, you don't receive an
 
 ## Second Part of the Game (Rounds 3–4)
 
-> *Spring is in full swing and the second part of the project is starting – the third and fourth rounds. The grant is bigger this time, and your journeys will be longer too.*
+> _Spring is in full swing and the second part of the project is starting – the third and fourth rounds. The grant is bigger this time, and your journeys will be longer too._
 
 ### Receiving Money
 
@@ -214,9 +214,9 @@ This time, players' task is to **place both of their tokens at two different spa
 - **A player's tokens may not be at the same space.**
 - The phase ends when everyone has placed both their tokens.
 
-> *Remember that while the dealing player is laying out cards, both your tokens lie on the table.*
+> _Remember that while the dealing player is laying out cards, both your tokens lie on the table._
 
-> *So tokens can be at two different countries, or at one country and at space 40.*
+> _So tokens can be at two different countries, or at one country and at space 40._
 
 #### Evaluation
 
@@ -226,17 +226,17 @@ To determine the price, start at the starting country and progressively visit on
 
 You calculate the journey price using the same rules as in the first round. The only clarification concerns neighboring countries:
 
-| Cost | Rule |
-|------|------|
+| Cost        | Rule                                                                                                                                                                                               |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **-30 -30** | For chosen countries **that border each other**, the player pays a 30 euro surcharge. For each chosen country that **directly borders the starting country**, the player pays a 30 euro surcharge. |
 
 It doesn't matter which route they take or in what order they visit the chosen countries. **The surcharge is paid because the countries are neighbors**, not because they're next to each other on their route.
 
-> *So in total, you can pay up to 90 euros in penalties.*
+> _So in total, you can pay up to 90 euros in penalties._
 
 If the player placed one of their tokens at **space 40**, they travel from the starting country **only to the country where they placed their other token**. 40 euros is added to the price of this journey (or more if their token isn't first at space 40).
 
-> *Start with players whose tokens aren't covered by others. If that's not possible, evaluate someone with one token covered, but don't remove the covered token yet.*
+> _Start with players whose tokens aren't covered by others. If that's not possible, evaluate someone with one token covered, but don't remove the covered token yet._
 
 #### Example
 
@@ -252,7 +252,7 @@ It's still better than if they had chosen Belgium instead of the Netherlands, wh
 
 ## Third Part of the Game (Rounds 5–6)
 
-> *In summer, the most prestigious part of the project takes place – with the largest grant and truly long journeys.*
+> _In summer, the most prestigious part of the project takes place – with the largest grant and truly long journeys._
 
 ### Receiving Money
 
@@ -278,12 +278,12 @@ Proceeds similarly to the previous two rounds. Mark the starting and destination
 
 The player must choose a route from one of the starting/destination country pair (it doesn't matter which – the journey costs the same in both directions) to the other. **They must pass through both chosen countries.** The price is determined the same as in the previous round, to be as low as possible:
 
-| Cost | Rule |
-|------|------|
+| Cost        | Rule                                                                                                                                                                                                                                                    |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **-30 -30** | Again, a 30 euro surcharge is paid for each neighboring pair of starting/destination and chosen country, or if both chosen countries are neighbors. **However, no surcharge is paid for any adjacency between the starting and destination countries.** |
-| **40** | If the player placed one token at space 40, they lead the route from the starting to the destination country **only through the country where they placed their other token**, but pay an additional 40 euros. |
+| **40**      | If the player placed one token at space 40, they lead the route from the starting to the destination country **only through the country where they placed their other token**, but pay an additional 40 euros.                                          |
 
-> *So in this round, the traveler can pay up to 150 euros in penalties for neighboring countries.*
+> _So in this round, the traveler can pay up to 150 euros in penalties for neighboring countries._
 
 ---
 
@@ -293,7 +293,7 @@ The player must choose a route from one of the starting/destination country pair
 
 ## Finale (Round 7)
 
-> *The fall round is a kind of reward for all faithful project participants. They can plan the journey of their dreams. Needless to say, interest suddenly shifts toward distant and expensive journeys.*
+> _The fall round is a kind of reward for all faithful project participants. They can plan the journey of their dreams. Needless to say, interest suddenly shifts toward distant and expensive journeys._
 
 The game ends with the last, seventh round. This time, **you don't receive any money in advance**, but you also **won't pay any money**. On the contrary, you'll receive a grant equal to how expensive a journey you plan.
 
@@ -311,9 +311,9 @@ Destination selection also looks the same as in the third part. Players place tw
 
 **This time, players don't try for the cheapest journey. They want to place their tokens so the journey is as long and expensive as possible.** This time you won't pay the journey price; instead, you'll receive money equal to its value.
 
-> *So in the destination selection phase, the player tries to place their tokens so that the cheapest route through them is as expensive as possible. However, the route itself, including the order of visited countries, is chosen by opponents.*
+> _So in the destination selection phase, the player tries to place their tokens so that the cheapest route through them is as expensive as possible. However, the route itself, including the order of visited countries, is chosen by opponents._
 
-> *It's a bonus for not burdening the project treasury too much with your traveling. Once those grants are announced, they simply have to be distributed.*
+> _It's a bonus for not burdening the project treasury too much with your traveling. Once those grants are announced, they simply have to be distributed._
 
 #### Evaluation
 
@@ -328,7 +328,7 @@ The journey price is determined similarly to the third part of the game:
 - Placing a token at space 40 also means the player **adds 40 euros** to the journey price through the country chosen with their other token.
 - However, this time the price **decreases by 10 euros for each token** lying under either of their tokens.
 
-> *So even in the seventh round, it's disadvantageous to be slower than others.*
+> _So even in the seventh round, it's disadvantageous to be slower than others._
 
 ---
 
@@ -338,7 +338,7 @@ The game ends after the seventh round. Players count their money (saved during t
 
 **Whoever has the highest amount wins.** Alternatively, all players who earned the most money are winners. So there can be multiple winners.
 
-> *That's not entirely true. This game is about traveling and learning, so really everyone who enjoyed it and maybe learned something new has won.*
+> _That's not entirely true. This game is about traveling and learning, so really everyone who enjoyed it and maybe learned something new has won._
 
 ---
 
@@ -346,13 +346,13 @@ The game ends after the seventh round. Players count their money (saved during t
 
 If only two or three players are playing, you can try a more challenging variant. Each player takes **two traveler cards and both tokens from both chosen colors**.
 
-> *With regular rules, the game with fewer players is easier – there are fewer tokens in the game, and good choices often remain available even for players who don't hurry.*
+> _With regular rules, the game with fewer players is easier – there are fewer tokens in the game, and good choices often remain available even for players who don't hurry._
 
 ### Receiving Money
 
 The player receives income for both traveler cards, so **200, 400, and 600 euros** in the respective parts.
 
-> *Both of the player's travelers share a common money pile. Cash is shared for both colors. So one color can spend more than 100 euros in the first part.*
+> _Both of the player's travelers share a common money pile. Cash is shared for both colors. So one color can spend more than 100 euros in the first part._
 
 ### Choosing Destinations
 
@@ -362,7 +362,7 @@ Players play both colors simultaneously. They place tokens again sequentially an
 
 In the second and third parts and in the final round, everyone places four tokens (two from each color). They may not choose exactly the same pair of spaces for both colors; at least one token from each color must go to different spaces.
 
-> *So a player may place one token from each color at one space, but the remaining two tokens must then each go to different spaces.*
+> _So a player may place one token from each color at one space, but the remaining two tokens must then each go to different spaces._
 
 ### Evaluation
 
@@ -378,7 +378,7 @@ If a player accidentally places tokens of both colors the same way, proceed as f
 - Proceed the same way if a player places both tokens of the same color at one space (this can also happen in the basic variant of the game).
 - If they were placing four tokens (in rounds three through seven) and placed them in pairs at the same spaces, they must take both their bottom tokens and place them again in accordance with the rules.
 
-> *One of them can even go back to the original position (on top of the stack at the same space), but in that case the other must go elsewhere.*
+> _One of them can even go back to the original position (on top of the stack at the same space), but in that case the other must go elsewhere._
 
 ---
 

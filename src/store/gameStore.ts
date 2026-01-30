@@ -1,40 +1,45 @@
-import { createStore } from 'solid-js/store';
-import { GameState, GameAction, CountryId } from '../types/game';
-import { EUROPE_GRAPH } from '../data/europeGraph';
-import { findMultiStagePath, calculateJourneyCost } from '../game-core/pathfinding';
+import { createStore } from "solid-js/store";
+import { GameState, GameAction, CountryId, Player } from "../types/game";
+import { EUROPE_GRAPH } from "../data/europeGraph";
+import { findMultiStagePath, calculateJourneyCost } from "../game-core/pathfinding";
 
 interface GameStore extends GameState {
     settings: {
         showTravelCosts: boolean;
-        mapStyle: 'blank' | 'codes';
-        map: 'europe';
-        stackingRule: 'ordered' | 'none';
+        mapStyle: "blank" | "codes";
+        map: "europe";
+        stackingRule: "ordered" | "none";
     };
     activePlayerId: string | null;
     highlightedPlayerId: string | null; // For visualization
     roundHistory: RoundSummary[];
-    dispatch: (action: GameAction |
-    { type: 'UPDATE_SETTINGS', payload: Partial<GameStore['settings']> } |
-    { type: 'SET_ACTIVE_PLAYER', payload: string } |
-    { type: 'SET_HIGHLIGHTED_PLAYER', payload: string | null }
+    dispatch: (
+        action:
+            | GameAction
+            | { type: "UPDATE_SETTINGS"; payload: Partial<GameStore["settings"]> }
+            | { type: "SET_ACTIVE_PLAYER"; payload: string }
+            | { type: "SET_HIGHLIGHTED_PLAYER"; payload: string | null },
     ) => void;
 }
 
 export interface RoundSummary {
     round: number;
-    players: Record<string, {
-        journeyCost: number;
-        stackingPenalty: number;
-        space40Cost: number;
-        totalCost: number;
-        totalEarnings?: number; // For Round 7
-        path: CountryId[] | null; // The actual path taken
-    }>;
+    players: Record<
+        string,
+        {
+            journeyCost: number;
+            stackingPenalty: number;
+            space40Cost: number;
+            totalCost: number;
+            totalEarnings?: number; // For Round 7
+            path: CountryId[] | null; // The actual path taken
+        }
+    >;
 }
 
-export const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
+export const INITIAL_STATE: Omit<GameStore, "dispatch"> = {
     round: 1,
-    phase: 'MENU',
+    phase: "MENU",
     players: {},
     offer: [],
     startingCountry: null,
@@ -45,30 +50,37 @@ export const INITIAL_STATE: Omit<GameStore, 'dispatch'> = {
     currentSelections: {},
     settings: {
         showTravelCosts: true,
-        mapStyle: 'blank',
-        map: 'europe',
-        stackingRule: 'none' // Default: No stacking penalties (Pass 'n Play friendly)
+        mapStyle: "blank",
+        map: "europe",
+        stackingRule: "none", // Default: No stacking penalties (Pass 'n Play friendly)
     },
     activePlayerId: null,
     highlightedPlayerId: null,
-    roundHistory: []
+    roundHistory: [],
 };
 
 // Create SolidJS Store
 export const [gameStore, setGameStore] = createStore<GameStore>({
     ...INITIAL_STATE,
-    dispatch: (action: any) => dispatch(action)
+    dispatch: (action: GameAction) => dispatch(action),
 });
 
 // Dispatch function
-export const dispatch = (action: any) => {
+export const dispatch = (action: GameAction) => {
     setGameStore((state) => reducer(state, action));
 };
 
+declare global {
+    interface Window {
+        gameStore: typeof gameStore;
+        setGameStore: typeof setGameStore;
+    }
+}
+
 // Debug helper
-if (typeof window !== 'undefined') {
-    (window as any).gameStore = gameStore;
-    (window as any).setGameStore = setGameStore;
+if (typeof window !== "undefined") {
+    window.gameStore = gameStore;
+    window.setGameStore = setGameStore;
 }
 
 // Helper to shuffle array
@@ -82,43 +94,43 @@ const shuffle = <T>(array: T[]): T[] => {
 };
 
 // Pure Reducer Function for State Logic
-function reducer(state: GameStore, action: any): Partial<GameStore> {
+function reducer(state: GameStore, action: GameAction): Partial<GameStore> {
     switch (action.type) {
-        case 'ENTER_SETUP': {
+        case "ENTER_SETUP": {
             return {
                 ...state,
-                phase: 'SETUP'
+                phase: "SETUP",
             };
         }
 
-        case 'UPDATE_SETTINGS': {
+        case "UPDATE_SETTINGS": {
             return {
                 ...state,
                 settings: {
                     ...state.settings,
-                    ...action.payload
-                }
+                    ...action.payload,
+                },
             };
         }
 
-        case 'SET_ACTIVE_PLAYER': {
+        case "SET_ACTIVE_PLAYER": {
             return {
                 ...state,
-                activePlayerId: action.payload
+                activePlayerId: action.payload,
             };
         }
 
-        case 'SET_HIGHLIGHTED_PLAYER': {
+        case "SET_HIGHLIGHTED_PLAYER": {
             return {
                 ...state,
-                highlightedPlayerId: action.payload
+                highlightedPlayerId: action.payload,
             };
         }
 
-        case 'START_GAME': {
+        case "START_GAME": {
             // In the future, we can switch between graphs based on state.settings.map
             // For now, only EUROPE_GRAPH is available
-            const mapGraph = state.settings.map === 'europe' ? EUROPE_GRAPH : EUROPE_GRAPH;
+            const mapGraph = state.settings.map === "europe" ? EUROPE_GRAPH : EUROPE_GRAPH;
             const allCountries = Object.keys(mapGraph) as CountryId[];
             const deck = shuffle(allCountries);
             const playerIds = action.payload.playerIds;
@@ -126,17 +138,21 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             return {
                 ...state,
                 round: 1,
-                phase: 'DEALING',
-                players: playerIds.reduce((acc: any, id: string, idx: number) => ({
-                    ...acc,
-                    [id]: {
-                        id,
-                        name: `Player ${idx + 1}`,
-                        color: ['#ef4444', '#3b82f6', '#22c55e', '#eab308'][idx % 4],
-                        money: 100, // Part 1 (Rounds 1-2) Start Money
-                        tokens: { remaining: 1, placed: false },
-                    }
-                }), {}),
+                phase: "DEALING",
+
+                players: playerIds.reduce(
+                    (acc: Record<string, Player>, id: string, idx: number) => ({
+                        ...acc,
+                        [id]: {
+                            id,
+                            name: `Player ${idx + 1}`,
+                            color: ["#ef4444", "#3b82f6", "#22c55e", "#eab308"][idx % 4],
+                            money: 100, // Part 1 (Rounds 1-2) Start Money
+                            tokens: { remaining: 1, placed: false },
+                        },
+                    }),
+                    {} as Record<string, Player>,
+                ),
                 activePlayerId: playerIds[0], // Auto-select first player
                 placements: [],
                 offer: [],
@@ -144,11 +160,11 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 deck,
                 discard: [],
                 currentSelections: {},
-                roundHistory: []
+                roundHistory: [],
             };
         }
 
-        case 'DEAL_ROUND': {
+        case "DEAL_ROUND": {
             const { round } = action.payload;
             let currentDeck = [...state.deck];
             let currentDiscard = [...state.discard];
@@ -180,21 +196,21 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             }
 
             // Money Increase Rules (Part 2 & 3)
-            let updatedPlayersForDeal = { ...state.players };
+            const updatedPlayersForDeal = { ...state.players };
             if (round === 3) {
                 // Part 2: Add 200€
-                Object.keys(updatedPlayersForDeal).forEach(pid => {
+                Object.keys(updatedPlayersForDeal).forEach((pid) => {
                     updatedPlayersForDeal[pid] = {
                         ...updatedPlayersForDeal[pid],
-                        money: updatedPlayersForDeal[pid].money + 200
+                        money: updatedPlayersForDeal[pid].money + 200,
                     };
                 });
             } else if (round === 5) {
                 // Part 3: Add 300€
-                Object.keys(updatedPlayersForDeal).forEach(pid => {
+                Object.keys(updatedPlayersForDeal).forEach((pid) => {
                     updatedPlayersForDeal[pid] = {
                         ...updatedPlayersForDeal[pid],
-                        money: updatedPlayersForDeal[pid].money + 300
+                        money: updatedPlayersForDeal[pid].money + 300,
                     };
                 });
             }
@@ -202,7 +218,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             return {
                 ...state,
                 round: round,
-                phase: 'TRAVEL_PLANNING',
+                phase: "TRAVEL_PLANNING",
                 players: updatedPlayersForDeal,
                 deck: currentDeck,
                 discard: currentDiscard,
@@ -214,7 +230,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             };
         }
 
-        case 'RESOLVE_ROUND': {
+        case "RESOLVE_ROUND": {
             // Move all current board cards to discard
             const usedCards: CountryId[] = [...state.offer];
             if (state.startingCountry) usedCards.push(state.startingCountry);
@@ -229,24 +245,29 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
 
             // Validation: Ensure all players have correct number of selections
             const requiredSelections = state.round <= 2 ? 1 : 2;
-            const allReady = Object.keys(state.players).every(pid => {
+            const allReady = Object.keys(state.players).every((pid) => {
                 const selections = state.currentSelections[pid] || [];
                 // console.log(`Player ${pid} has ${selections.length} selections, needed ${requiredSelections}`);
                 return selections.length === requiredSelections;
             });
 
             if (!allReady) {
-                console.warn("Attempted to resolve round without all players ready. Players:", Object.keys(state.players), "Selections:", state.currentSelections);
+                console.warn(
+                    "Attempted to resolve round without all players ready. Players:",
+                    Object.keys(state.players),
+                    "Selections:",
+                    state.currentSelections,
+                );
                 return state; // No-op if not ready
             }
 
             const currentRoundSummary: RoundSummary = {
                 round: state.round,
-                players: {}
+                players: {},
             };
 
             if (start) {
-                Object.keys(updatedPlayers).forEach(pid => {
+                Object.keys(updatedPlayers).forEach((pid) => {
                     const player = { ...updatedPlayers[pid] };
                     const choices = selections[pid] || [];
 
@@ -258,7 +279,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
 
                     // Calculate Journey Cost
                     // Filter out SPACE_40 for travel path
-                    const travelDestinations = choices.filter(c => c !== 'SPACE_40');
+                    const travelDestinations = choices.filter((c) => c !== "SPACE_40");
 
                     if (travelDestinations.length > 0) {
                         try {
@@ -283,28 +304,28 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                     }
 
                     // Base Cost for Space 40
-                    if (choices.includes('SPACE_40')) {
+                    if (choices.includes("SPACE_40")) {
                         space40Cost += 40;
                     }
 
                     // Stacking Penalty (Check ALL choices, including SPACE_40)
-                    choices.forEach(cid => {
-                        const tokensOnCountry = state.placements.filter(p => p.countryId === cid);
+                    choices.forEach((cid) => {
+                        const tokensOnCountry = state.placements.filter((p) => p.countryId === cid);
 
                         // Sort by timestamp (asc) to determine who was first
                         tokensOnCountry.sort((a, b) => a.timestamp - b.timestamp);
 
                         // If rule is 'none', no penalty ever.
                         // If rule is 'ordered' (default), first player is safe, others pay.
-                        if (state.settings.stackingRule === 'ordered') {
-                            const myIndex = tokensOnCountry.findIndex(p => p.playerId === pid);
+                        if (state.settings.stackingRule === "ordered") {
+                            const myIndex = tokensOnCountry.findIndex((p) => p.playerId === pid);
                             if (myIndex > 0) {
                                 stackingPenalty += 10;
                             }
                         }
                     });
 
-                    let totalCost = journeyCost + space40Cost + stackingPenalty;
+                    const totalCost = journeyCost + space40Cost + stackingPenalty;
 
                     if (isFinale) {
                         // In finale, stacking is a deduction from earnings? Or cost?
@@ -322,7 +343,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                         space40Cost,
                         totalCost,
                         totalEarnings: isFinale ? roundEarnings : undefined,
-                        path: calculatedPath
+                        path: calculatedPath,
                     };
 
                     // Consume token
@@ -330,7 +351,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                         player.tokens = {
                             ...player.tokens,
                             remaining: player.tokens.remaining - 1,
-                            placed: true
+                            placed: true,
                         };
                     }
 
@@ -339,7 +360,7 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
             }
 
             const nextRound = state.round + 1;
-            const nextPhase = nextRound > 7 ? 'GAME_END' : 'ROUND_END';
+            const nextPhase = nextRound > 7 ? "GAME_END" : "ROUND_END";
 
             return {
                 ...state,
@@ -350,11 +371,11 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 destinationCountry: null,
                 discard: [...state.discard, ...usedCards],
                 currentSelections: {},
-                roundHistory: [...state.roundHistory, currentRoundSummary]
+                roundHistory: [...state.roundHistory, currentRoundSummary],
             };
         }
 
-        case 'PLACE_TOKEN': {
+        case "PLACE_TOKEN": {
             const { playerId, countryId } = action.payload;
 
             // Limit selections based on round
@@ -372,15 +393,15 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
 
             // Standard toggle logic for all selections, including SPACE_40
             if (newSelections.includes(countryId)) {
-                newSelections = newSelections.filter(c => c !== countryId);
+                newSelections = newSelections.filter((c) => c !== countryId);
             } else if (newSelections.length < maxSelections) {
                 newSelections.push(countryId);
             }
 
             // Create new placements, preserving timestamps for existing selections
-            const currentPlayerPlacements = state.placements.filter(p => p.playerId === playerId);
-            const newPlacements = newSelections.map(cid => {
-                const existing = currentPlayerPlacements.find(p => p.countryId === cid);
+            const currentPlayerPlacements = state.placements.filter((p) => p.playerId === playerId);
+            const newPlacements = newSelections.map((cid) => {
+                const existing = currentPlayerPlacements.find((p) => p.countryId === cid);
                 return existing ? existing : { playerId, countryId: cid, timestamp: Date.now() };
             });
 
@@ -388,13 +409,13 @@ function reducer(state: GameStore, action: any): Partial<GameStore> {
                 ...state,
                 currentSelections: {
                     ...state.currentSelections,
-                    [playerId]: newSelections
+                    [playerId]: newSelections,
                 },
                 // Update placements
                 placements: [
-                    ...state.placements.filter(p => p.playerId !== playerId), // Remove old for this player
-                    ...newPlacements
-                ]
+                    ...state.placements.filter((p) => p.playerId !== playerId), // Remove old for this player
+                    ...newPlacements,
+                ],
             };
         }
 

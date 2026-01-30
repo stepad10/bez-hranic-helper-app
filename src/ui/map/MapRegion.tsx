@@ -1,34 +1,35 @@
 import { Geography } from "solidjs-simple-maps";
+import { Feature } from "geojson";
 import { gameStore, dispatch } from "../../store/gameStore";
-import { findShortestPath, calculateJourneyCost } from "../../game-core/pathfinding";
+import { findShortestPath, calculateJourneyCost, JourneyCost } from "../../game-core/pathfinding";
 import { EUROPE_GRAPH } from "../../data/europeGraph";
 import { createMemo, createSignal } from "solid-js";
 
 interface MapRegionProps {
-    geo: any;
-    onHoverCost: (cost: any) => void;
+    geo: Feature;
+    onHoverCost: (cost: JourneyCost | null) => void;
 }
 
 export function MapRegion(props: MapRegionProps) {
-    const geoId = () => props.geo.id;
+    const geoId = () => (props.geo.id || "") as string;
 
     const isStart = createMemo(() => gameStore.startingCountry === geoId());
     const isDest = createMemo(() => gameStore.destinationCountry === geoId());
     const isOffer = createMemo(() => gameStore.offer.includes(geoId()));
-    const tokensHere = createMemo(() => gameStore.placements.filter(p => p.countryId === geoId()));
+    const tokensHere = createMemo(() => gameStore.placements.filter((p) => p.countryId === geoId()));
 
     const [isHovered, setIsHovered] = createSignal(false);
 
     const handleClick = () => {
-        if (gameStore.phase !== 'TRAVEL_PLANNING') return;
+        if (gameStore.phase !== "TRAVEL_PLANNING") return;
 
         // Use accessor value
         if (isOffer()) {
             if (!gameStore.activePlayerId) return;
 
             dispatch({
-                type: 'PLACE_TOKEN',
-                payload: { playerId: gameStore.activePlayerId, countryId: geoId() }
+                type: "PLACE_TOKEN",
+                payload: { playerId: gameStore.activePlayerId, countryId: geoId() },
             });
         }
     };
@@ -98,7 +99,7 @@ export function MapRegion(props: MapRegionProps) {
             fill={currentStyle().fill}
             stroke={currentStyle().stroke}
             stroke-width={currentStyle().strokeWidth}
-            {...({ class: "map-region" } as any)}
+            class="map-region"
         />
     );
 }

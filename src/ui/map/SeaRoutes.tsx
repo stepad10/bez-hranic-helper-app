@@ -1,33 +1,40 @@
-import { createMemo, For } from 'solid-js';
-import { Line } from 'solidjs-simple-maps';
-import { geoCentroid } from 'd3-geo';
-import { EUROPE_GRAPH } from '../../data/europeGraph';
-import { CountryId } from '../../types/game';
+import { createMemo, For } from "solid-js";
+import { Line, Coordinates, createCoordinates } from "solidjs-simple-maps";
+import { geoCentroid, GeoPermissibleObjects } from "d3-geo";
+import { Feature } from "geojson";
+import { EUROPE_GRAPH } from "../../data/europeGraph";
+import { CountryId } from "../../types/game";
 
 interface SeaRoutesProps {
-    geographies: any[];
+    geographies: GeoPermissibleObjects[];
+}
+
+interface SeaRouteLine {
+    from: Coordinates;
+    to: Coordinates;
+    key: string;
 }
 
 export function SeaRoutes(props: SeaRoutesProps) {
     const routes = createMemo(() => {
-        const countryCentroids: Record<string, [number, number]> = {};
+        const countryCentroids: Record<string, Coordinates> = {};
 
         // 1. Calculate centroids for all visible countries
-        props.geographies.forEach(geo => {
+        props.geographies.forEach((geo) => {
             const centroid = geoCentroid(geo);
-            const id = geo.id as CountryId;
+            const id = (geo as Feature).id as CountryId;
             if (id && centroid) {
-                countryCentroids[id] = centroid;
+                countryCentroids[id] = createCoordinates(centroid[0], centroid[1]);
             }
         });
 
         // 2. Identify unique SEA connections
-        const lines: { from: [number, number], to: [number, number], key: string }[] = [];
+        const lines: SeaRouteLine[] = [];
         const processed = new Set<string>();
 
-        Object.values(EUROPE_GRAPH).forEach(node => {
-            node.neighbors.forEach(neighbor => {
-                if (neighbor.type === 'SEA') {
+        Object.values(EUROPE_GRAPH).forEach((node) => {
+            node.neighbors.forEach((neighbor) => {
+                if (neighbor.type === "SEA") {
                     // Create a sorted key to avoid duplicates (A-B and B-A)
                     const [id1, id2] = [node.id, neighbor.target].sort();
                     const edgeKey = `${id1}-${id2}`;
@@ -51,16 +58,8 @@ export function SeaRoutes(props: SeaRoutesProps) {
     return (
         <g>
             <For each={routes()}>
-                {route => (
-                    <Line
-                        from={route.from as any}
-                        to={route.to as any}
-                        stroke="#3b82f6"
-                        stroke-width={1.5}
-                        stroke-dasharray="4 4"
-                        stroke-linecap="round"
-                        class="sea-route"
-                    />
+                {(route) => (
+                    <Line from={route.from} to={route.to} stroke="#3b82f6" stroke-width={1.5} stroke-dasharray="4 4" stroke-linecap="round" class="sea-route" />
                 )}
             </For>
         </g>

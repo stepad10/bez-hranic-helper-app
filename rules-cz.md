@@ -24,11 +24,11 @@ Stačí tedy přečíst či vysvětlit hráčům pravidla pro první část, a h
 
 **Zvítězí hráč, který bude mít na konci hry nejvíce peněz.**
 
-> *Pro první hru můžete zvolit tu mapu, kterou všichni znáte lépe, ale není to podmínkou. Pro hru stačí, když hráči budou mít o mapě i jen základní představu.*
+> _Pro první hru můžete zvolit tu mapu, kterou všichni znáte lépe, ale není to podmínkou. Pro hru stačí, když hráči budou mít o mapě i jen základní představu._
 
-> *Každý hráč má svou kartu cestovatele, na ní může průběh hry sledovat. Přehled znázorňuje pravidla a jednotlivé části hry.*
+> _Každý hráč má svou kartu cestovatele, na ní může průběh hry sledovat. Přehled znázorňuje pravidla a jednotlivé části hry._
 
-> *První hru si nemusíte komplikovat vysvětlováním celých pravidel. Hráčům stačí sdělit, co je cílem hry. Každé kolo musí ušetřit co nejvíce z přidělené dotace.*
+> _První hru si nemusíte komplikovat vysvětlováním celých pravidel. Hráčům stačí sdělit, co je cílem hry. Každé kolo musí ušetřit co nejvíce z přidělené dotace._
 
 ---
 
@@ -38,19 +38,19 @@ Stačí tedy přečíst či vysvětlit hráčům pravidla pro první část, a h
 
 Každý hráč si vybere jednu kartu cestovatele a dva kulaté žetony ve stejné barvě a položí je před sebe na stůl. Karta cestovatele obsahuje na jedné straně přehled hry a pravidla pro vyhodnocování cest na straně druhé.
 
-> *A také připomíná zapomnětlivým hráčům, která barva je jejich, když se jejich žetony vydají na cesty.*
+> _A také připomíná zapomnětlivým hráčům, která barva je jejich, když se jejich žetony vydají na cesty._
 
 ### Herní plán
 
 Herní plán umístěte doprostřed stolu tak, aby na něj pohodlně dosáhli všichni hráči.
 
-> *Buďte milí a přišoupněte ho o něco blíž k těm menším, s kratšíma rukama.*
+> _Buďte milí a přišoupněte ho o něco blíž k těm menším, s kratšíma rukama._
 
 ### Herní peníze
 
 Herní peníze dejte na dostupné místo jako bank.
 
-> *Pokud nemáte rádi anarchii, kdy každý „hrabe" do společné kasy, jak chce, můžete zvolit bankéře, který bude mít během hry rozdávání a přijímání peněz na starosti.*
+> _Pokud nemáte rádi anarchii, kdy každý „hrabe" do společné kasy, jak chce, můžete zvolit bankéře, který bude mít během hry rozdávání a přijímání peněz na starosti._
 
 ### Kamínky
 
@@ -60,7 +60,7 @@ Připravte čtyři průhledné kamínky. Budete je potřebovat až při vyhodnoc
 
 Ke každé mapě náleží sada karet s jednotlivými státy. Tyto karty zamíchejte a položte rubovou stranou nahoru před jednoho z hráčů. Ten se stane rozdávajícím hráčem pro první kolo.
 
-> *To, kdo je rozdávající hráč, nemá na hru velký vliv, proto ponechme jeho volbu jako privilegium tomu, kdo byl tak hodný, že karty zamíchal.*
+> _To, kdo je rozdávající hráč, nemá na hru velký vliv, proto ponechme jeho volbu jako privilegium tomu, kdo byl tak hodný, že karty zamíchal._
 
 ### Mapa
 
@@ -68,13 +68,13 @@ Ukažte hráčům zvolenou mapu a upozorněte je na její specifika. Předevší
 
 Pak mapu složte a položte zatím stranou. **Během hry je mapa hráčům skrytá, používá se až při vyhodnocování.**
 
-> *Možná někteří hráči v tomto okamžiku zpanikaří. Uklidněte je, mapu nemusí přesně znát. Naopak, názory jako „Jižní Dakota... to bude někde na jihu..." dělají hru veselejší a zábavnější.*
+> _Možná někteří hráči v tomto okamžiku zpanikaří. Uklidněte je, mapu nemusí přesně znát. Naopak, názory jako „Jižní Dakota... to bude někde na jihu..." dělají hru veselejší a zábavnější._
 
 ### Další komponenty
 
 Druhou mapu a k ní náležející karty dejte do krabice, nebudete je zatím potřebovat.
 
-> *Leda by někdo hned po skončení hry řekl: „To bylo super, nezkusíme ještě tu druhou mapu?"*
+> _Leda by někdo hned po skončení hry řekl: „To bylo super, nezkusíme ještě tu druhou mapu?"_
 
 ---
 
@@ -84,7 +84,7 @@ Druhou mapu a k ní náležející karty dejte do krabice, nebudete je zatím po
 
 Na začátku první části dostane **každý hráč 100 euro**. Tyto peníze má pro první a druhé kolo hry. Další peníze dostanete až na začátku třetího kola.
 
-> *Sezona Bez hranic začíná každoročně už na sklonku zimy, a to přidělením prvních peněz a vypsáním prvních dvou kol projektu.*
+> _Sezona Bez hranic začíná každoročně už na sklonku zimy, a to přidělením prvních peněz a vypsáním prvních dvou kol projektu._
 
 ### První a druhé kolo
 
@@ -94,9 +94,9 @@ Každé kolo hry zahájí rozdávající hráč. Natočí herní desku tak, aby 
 
 Ihned po zaplnění všech sedmi polí položí **lícovou stranou nahoru osmou kartu doprostřed herního plánu**. Tuto kartu nazýváme **kartou startovního státu**. Jakmile je odkryta, hráči si vybírají destinace.
 
-> *Každé kolo projektu začíná zveřejněním sponzorských států na webu projektu. Vždy jeden stát je hlavním sponzorem a stává se takzvaným startovním státem a sedm dalších států tvoří nabídku pro toto kolo.*
+> _Každé kolo projektu začíná zveřejněním sponzorských států na webu projektu. Vždy jeden stát je hlavním sponzorem a stává se takzvaným startovním státem a sedm dalších států tvoří nabídku pro toto kolo._
 
-> *Všichni účastníci projektu jsou zváni na návštěvu startovního státu. Z nabídky států si pak mohou vybrat ještě jeden další, který navštíví.*
+> _Všichni účastníci projektu jsou zváni na návštěvu startovního státu. Z nabídky států si pak mohou vybrat ještě jeden další, který navštíví._
 
 #### Výběr destinací
 
@@ -112,19 +112,19 @@ Při pokládání žetonů se hráči snaží vybrat ze sedmi států takový, d
 
 Také se snaží být co nejrychlejší, protože s každým žetonem, který je u státu položen dříve, se stává stát méně výhodný.
 
-> *Proč, to uvidíte dále v kapitole Vyhodnocení. Pravidla projektu jsou nastavena tak, abyste si trochu zacestovali, ale abyste zároveň neutráceli zbytečně moc.*
+> _Proč, to uvidíte dále v kapitole Vyhodnocení. Pravidla projektu jsou nastavena tak, abyste si trochu zacestovali, ale abyste zároveň neutráceli zbytečně moc._
 
-> *To víte, nejlepší možnosti jsou často rozebrány hned, jakmile je na webu projektu nabídka zveřejněna.*
+> _To víte, nejlepší možnosti jsou často rozebrány hned, jakmile je na webu projektu nabídka zveřejněna._
 
 Hráč může položit žeton i k **poli 40**. Tím naznačuje, že nemá zájem o žádný ze států. Obvykle tak učiní, když usoudí, že vybrané státy jsou příliš nevýhodné nebo už je u nich příliš žetonů. Také u tohoto pole může být více žetonů, a také zde je méně výhodné, pokud pokládáte svůj žeton na dříve položené žetony.
 
-> *Někdy prostě raději vrátíte část dotace, než abyste na cestu dopláceli ze svého.*
+> _Někdy prostě raději vrátíte část dotace, než abyste na cestu dopláceli ze svého._
 
 **Nezapomeňte, že během této fáze je mapa skrytá a hráči do ní nesmí nahlížet.**
 
-> *Varianta: Hrajete-li s menšími dětmi, které ještě o mapě nemají ani zbežné ponětí, můžete jim pro první hry nechat mapu odkrytou. Budete překvapeni, jak rychle se s ní seznámí. Brzy budou schopny hrát i se zakrytou mapou. A v hodinách zeměpisu pak budou hvězdami!*
+> _Varianta: Hrajete-li s menšími dětmi, které ještě o mapě nemají ani zbežné ponětí, můžete jim pro první hry nechat mapu odkrytou. Budete překvapeni, jak rychle se s ní seznámí. Brzy budou schopny hrát i se zakrytou mapou. A v hodinách zeměpisu pak budou hvězdami!_
 
-> *Pokud už všichni ostatní své žetony položili, je slušností příliš nezdržovat a vybrat si co nejdříve také... ať už se všichni můžete vydat na cesty.*
+> _Pokud už všichni ostatní své žetony položili, je slušností příliš nezdržovat a vybrat si co nejdříve také... ať už se všichni můžete vydat na cesty._
 
 #### Vyhodnocení
 
@@ -134,26 +134,26 @@ Vezměte jeden z barevných kamínků a položte ho na startovní stát na mapě
 
 Nyní spočítejte, kolik hráč za svou cestu utratil. Cestu si každý může zvolit sám tak, aby jej stála co nejméně.
 
-> *Pro urychlení hry mu mohou ostatní pomáhat s hledáním optimální cestu, neměli by však úmyslně radit špatně.*
+> _Pro urychlení hry mu mohou ostatní pomáhat s hledáním optimální cestu, neměli by však úmyslně radit špatně._
 
-> *Některé státy jsou tak maličké, že je kamínek celé překryje. Je však průhledný, a tak máte vlastně stát v kamínku, místo kamínek ve státě.*
+> _Některé státy jsou tak maličké, že je kamínek celé překryje. Je však průhledný, a tak máte vlastně stát v kamínku, místo kamínek ve státě._
 
 **Pravidla pro určení ceny jsou na druhé straně nápovědní karty:**
 
-| Cena | Pravidlo |
-|------|----------|
-| **-10** | Každý **přechod hranic** stojí hráče 10 euro. Přechodem rozumíme překročení hranice mezi sousedními státy nebo přesun po vyznačené linii po moři. |
+| Cena    | Pravidlo                                                                                                                                                                                                    |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **-10** | Každý **přechod hranic** stojí hráče 10 euro. Přechodem rozumíme překročení hranice mezi sousedními státy nebo přesun po vyznačené linii po moři.                                                           |
 | **-30** | Pokud hráč zvolil stát, který **přímo sousedí** se startovním státem, zaplatí ještě přirážku 30 euro (bez ohledu na to, kudy chce cestovat). Opět – za sousední se považují i státy spojené linkou po moři. |
-| **-10** | Navíc zaplatí hráč příplatek **10 euro za každý žeton, který leží pod jeho žetonem**. |
-| **40** | Pokud hráč přiložil žeton k poli 40, necestuje nikam. Zaplatí pouze naznačených **40 euro**, a navíc opět 10 euro za každý žeton, který leží pod jeho žetonem. |
+| **-10** | Navíc zaplatí hráč příplatek **10 euro za každý žeton, který leží pod jeho žetonem**.                                                                                                                       |
+| **40**  | Pokud hráč přiložil žeton k poli 40, necestuje nikam. Zaplatí pouze naznačených **40 euro**, a navíc opět 10 euro za každý žeton, který leží pod jeho žetonem.                                              |
 
-> *Nezáleží tedy na tom, jak daleko jedete, ale pouze na tom, kolik hranic překročíte. Z Ázerbájdžánu do Norska je to levnější, než byste čekali.*
+> _Nezáleží tedy na tom, jak daleko jedete, ale pouze na tom, kolik hranic překročíte. Z Ázerbájdžánu do Norska je to levnější, než byste čekali._
 
-> *Dostali jste peníze, abyste projeli kus světa. Jestli chcete jen tak přešlapovat na místě, budete jich muset část vrátit.*
+> _Dostali jste peníze, abyste projeli kus světa. Jestli chcete jen tak přešlapovat na místě, budete jich muset část vrátit._
 
-> *Kdo dřív klikne, ten dřív jede – nebo alespoň jede levněji.*
+> _Kdo dřív klikne, ten dřív jede – nebo alespoň jede levněji._
 
-> *Chcete si místo cestování užívat ve startovním státě? Dobrá, ale vraťte část dotace...*
+> _Chcete si místo cestování užívat ve startovním státě? Dobrá, ale vraťte část dotace..._
 
 Výslednou cenu hráč **zaplatí do banku**. (V případě, že by neměl celou částku, zaplatí pouze tolik, kolik má.)
 
@@ -169,13 +169,13 @@ Startovním státem byla Francie. Hráči položili své žetony, jak ukazuje ob
 - **Žlutý, modrá i fialová** cestují do Maďarska, což jsou tři přechody hranic. Fialová zaplatí **50 euro**, pod jejím žetonem jsou další dva. Modrá zaplatí **40 euro**, pod jejím žetonem je jeden další. Žlutý zaplatí **30 euro**.
 - **Zelený a bílý** dali žeton k poli 40. Nejedou tedy nikam. Bílý zaplatí **50 euro**, stojí na dalším žetonu. Zelený zaplatí **40 euro**.
 
-> *V nabídce států byla další dobrá volba, které si nikdo nevšiml. Řecko sice vypadá daleko, ale přes Itálii a Maltu se do něj dá dostat také na tři přechody hranic.*
+> _V nabídce států byla další dobrá volba, které si nikdo nevšiml. Řecko sice vypadá daleko, ale přes Itálii a Maltu se do něj dá dostat také na tři přechody hranic._
 
 ### Konec kola
 
 Tím kolo končí. Pokud to hráče zajímá, můžete si zemi, která byla v tomto kole startovní, vyhledat v přiloženém popisu států a přečíst si o ní několik zajímavostí. Dozvíte se mimo jiné, co je vlastně na obrázku kartičky.
 
-> *Když už jste ten stát všichni navštívili, tak ať si ze své virtuální cesty odnesete nějaké poznatky!*
+> _Když už jste ten stát všichni navštívili, tak ať si ze své virtuální cesty odnesete nějaké poznatky!_
 
 Po skončení vyhodnocení **mapu opět zavřete**. Karty z nabídky, včetně startovního státu, odložte stranou na hromádku (lícem vzhůru, aby se vám nepletly). Až do sedmého kola je nebudete potřebovat.
 
@@ -183,7 +183,7 @@ Po skončení vyhodnocení **mapu opět zavřete**. Karty z nabídky, včetně s
 
 Druhé kolo probíhá stejně jako první. **Nedostanete však žádné další peníze**, máte jen to, co vám zbylo z kola prvního. Pokud vám i po druhém kole ještě nějaké peníze zbudou, je to dobře pro vás, necháváte si je pro další kola.
 
-> *Pokud vám po druhém kole nezbylo nic, nevadí. Aspoň máte dobrý pocit, že jste obdržené peníze využili a hezky jste si zacestovali.*
+> _Pokud vám po druhém kole nezbylo nic, nevadí. Aspoň máte dobrý pocit, že jste obdržené peníze využili a hezky jste si zacestovali._
 
 ---
 
@@ -193,7 +193,7 @@ Druhé kolo probíhá stejně jako první. **Nedostanete však žádné další 
 
 ## Druhá část hry (Kola 3–4)
 
-> *Jaro je v plném proudu a rozbíhá se druhá část projektu – třetí a čtvrté kolo. Dotace je tentokrát větší, a také vaše cesty budou delší.*
+> _Jaro je v plném proudu a rozbíhá se druhá část projektu – třetí a čtvrté kolo. Dotace je tentokrát větší, a také vaše cesty budou delší._
 
 ### Příjem peněz
 
@@ -214,9 +214,9 @@ Vykládání karet států ve druhé části probíhá stejně jako v první č�
 - **Žetony jednoho hráče nesmí být u stejného pole.**
 - Fáze končí, jakmile všichni umístili oba své žetony.
 
-> *Nezapomeňte, že dokud rozdávající hráč vykládá, oba vaše žetony leží na stole.*
+> _Nezapomeňte, že dokud rozdávající hráč vykládá, oba vaše žetony leží na stole._
 
-> *Žetony tedy mohou být u dvou různých států, nebo u jednoho státu a u pole 40.*
+> _Žetony tedy mohou být u dvou různých států, nebo u jednoho státu a u pole 40._
 
 #### Vyhodnocení
 
@@ -226,17 +226,17 @@ Pro určení ceny začněte ve startovním státě a postupně navštivte jeden,
 
 Cenu cesty spočítáte podle stejných pravidel jako v prvním kole. Jediné upřesnění se týká sousedících států:
 
-| Cena | Pravidlo |
-|------|----------|
+| Cena        | Pravidlo                                                                                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **-30 -30** | Za vybrané státy, **které spolu sousedí**, platí hráč přirážku 30 euro. Za každý zvolený stát, který **přímo sousedí se startovním státem**, platí hráč přirážku 30 euro. |
 
 Nezáleží přitom na tom, kudy cestuje a v jakém pořadí zvolené státy navštěvuje. **Přirážku platí za to, že státy spolu sousedí**, nikoliv za to, že leží vedle sebe na jeho cestě.
 
-> *Celkově tedy můžete na pokutách zaplatit až 90 euro.*
+> _Celkově tedy můžete na pokutách zaplatit až 90 euro._
 
 Pokud hráč položil jeden z žetonů k **poli 40**, jede ze startovního státu **jen do státu, kam položil svůj druhý žeton**. K ceně této cesty se připočte 40 euro (nebo více, pokud jeho žeton není u pole 40 první).
 
-> *Začněte hráči, jejichž žetony nejsou překryty ostatními. Pokud to není možné, vyhodnoťte některého s jedním žetonem překrytým, ale překrytý žeton zatím neodstraňujte.*
+> _Začněte hráči, jejichž žetony nejsou překryty ostatními. Pokud to není možné, vyhodnoťte některého s jedním žetonem překrytým, ale překrytý žeton zatím neodstraňujte._
 
 #### Příklad
 
@@ -252,7 +252,7 @@ Je to ovšem pořád lepší, než kdyby si vybrala místo Nizozemska Belgii, kd
 
 ## Třetí část hry (Kola 5–6)
 
-> *V létě pak probíhá nejprestižnější část projektu – s největší dotací a opravdu dlouhými cestami.*
+> _V létě pak probíhá nejprestižnější část projektu – s největší dotací a opravdu dlouhými cestami._
 
 ### Příjem peněz
 
@@ -278,12 +278,12 @@ Probíhá obdobně jako v předchozích dvou kolech. Dvěma barevnými kamínky 
 
 Hráč musí zvolit cestu z jednoho z dvojice startovního a cílového státu (je jedno, který zvolí – oběma směry je cesta stejně drahá) do druhého. **Přitom musí projít přes oba zvolené státy.** Cena se určí stejně jako v předchozím kole, aby byla co nejnižší:
 
-| Cena | Pravidlo |
-|------|----------|
+| Cena        | Pravidlo                                                                                                                                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **-30 -30** | Opět se platí přirážka 30 euro za každou sousedící dvojici startovního/cílového a vybraného státu nebo pokud sousedí oba vybrané státy. **Za případné sousedství startovního a cílového státu se však přirážka neplatí.** |
-| **40** | V případě, že hráč umístil jeden žeton k poli 40, vede cestu ze startovního do cílového státu **pouze přes stát, ke kterému položil svůj druhý žeton**, ale zaplatí navíc 40 euro. |
+| **40**      | V případě, že hráč umístil jeden žeton k poli 40, vede cestu ze startovního do cílového státu **pouze přes stát, ke kterému položil svůj druhý žeton**, ale zaplatí navíc 40 euro.                                        |
 
-> *V tomto kole tedy může cestovatel na pokutách za sousedící státy zaplatit až 150 euro.*
+> _V tomto kole tedy může cestovatel na pokutách za sousedící státy zaplatit až 150 euro._
 
 ---
 
@@ -293,7 +293,7 @@ Hráč musí zvolit cestu z jednoho z dvojice startovního a cílového státu (
 
 ## Finále (Kolo 7)
 
-> *Podzimní kolo je jakousi odměnou pro všechny věrné účastníky projektu. Mohou si naplánovat cestu svých snů. Není třeba podotýkat, že zájem je najednou spíše o cesty vzdálené a nákladné.*
+> _Podzimní kolo je jakousi odměnou pro všechny věrné účastníky projektu. Mohou si naplánovat cestu svých snů. Není třeba podotýkat, že zájem je najednou spíše o cesty vzdálené a nákladné._
 
 Hra končí posledním, sedmým kolem. Tentokrát **nedostanete žádné peníze předem**, ale také **žádné peníze nebudete platit**. Naopak, dostanete právě takovou dotaci, jak drahou cestu si naplánujete.
 
@@ -311,9 +311,9 @@ Také výběr destinací vypadá stejně jako ve třetí části. Hráči poklá
 
 **Tentokrát se hráči nesnaží o co nejlevnější cestu. Chtějí položit žetony tak, aby cesta byla co nejdelší a nejdražší.** Cenu cesty tentokrát nebudete platit, ale naopak dostanete peníze v její hodnotě.
 
-> *Hráč se tedy ve fázi výběru destinací snaží položit žetony tak, aby ta nejlevnější trasa skrz ně byla co nejdražší. Cestu samotnou, včetně pořadí navštívených států, však volí soupeři.*
+> _Hráč se tedy ve fázi výběru destinací snaží položit žetony tak, aby ta nejlevnější trasa skrz ně byla co nejdražší. Cestu samotnou, včetně pořadí navštívených států, však volí soupeři._
 
-> *Je to bonus za to, že svým cestováním příliš nezatěžujete kasu projektu. Jednou ty dotace jsou vypsány, tak se prostě přidělit musí.*
+> _Je to bonus za to, že svým cestováním příliš nezatěžujete kasu projektu. Jednou ty dotace jsou vypsány, tak se prostě přidělit musí._
 
 #### Vyhodnocení
 
@@ -328,7 +328,7 @@ Cena cesty se určí podobně jako ve třetí části hry:
 - Také položení žetonu k poli 40 znamená, že hráč navíc k ceně cesty přes stát zvolený druhým žetonem **přičte 40 euro**.
 - Cena se ovšem tentokrát **snižuje o 10 euro za každý žeton** ležící pod kterýmkoliv z jeho žetonů.
 
-> *Tedy i v sedmém kole je nevýhodné být pomalejší než ostatní.*
+> _Tedy i v sedmém kole je nevýhodné být pomalejší než ostatní._
 
 ---
 
@@ -338,7 +338,7 @@ Hra končí po sedmém kole. Hráči spočítají své peníze (ušetřené běh
 
 **Zvítězí ten, kdo má nejvyšší částku.** Případně jsou vítězi všichni hráči, kteří získali nejvíce peněz. Vítězů tedy může být i více.
 
-> *To zas není tak úplně pravda. Tato hra je o cestování a poznávání, a tak vlastně zvítězili všichni, kdo si to užili a možná se i něco nového dozvěděli.*
+> _To zas není tak úplně pravda. Tato hra je o cestování a poznávání, a tak vlastně zvítězili všichni, kdo si to užili a možná se i něco nového dozvěděli._
 
 ---
 
@@ -346,13 +346,13 @@ Hra končí po sedmém kole. Hráči spočítají své peníze (ušetřené běh
 
 Hrají-li jen dva nebo tři hráči, můžete si vyzkoušet náročnější variantu. Každý hráč si vezme **dvě karty cestovatelů a oba žetony od obou zvolených barev**.
 
-> *Při běžných pravidlech je hra v méně hráčích jednodušší – ve hře je méně žetonů a často tak zbývají dobré volby i na hráče, kteří nepospíchají.*
+> _Při běžných pravidlech je hra v méně hráčích jednodušší – ve hře je méně žetonů a často tak zbývají dobré volby i na hráče, kteří nepospíchají._
 
 ### Příjem peněz
 
 Hráč dostává příjem za obě karty cestovatele, tedy v jednotlivých částech **200, 400 a 600 euro**.
 
-> *Oba hráčovi cestovatelé mají peníze na společné hromádce. Hotovost je pro obě barvy společná. Jedna barva tedy může utratit v první části i více než 100 euro.*
+> _Oba hráčovi cestovatelé mají peníze na společné hromádce. Hotovost je pro obě barvy společná. Jedna barva tedy může utratit v první části i více než 100 euro._
 
 ### Volba destinací
 
@@ -362,7 +362,7 @@ Hráči hrají za obě barvy současně. Žetony přikládají opět postupně a
 
 Ve druhé a třetí části i ve finálovém kole umisťuje každý čtyři žetony (dva od každé barvy). Nesmí pro obě barvy zvolit přesně stejnou dvojici polí, aspoň jeden žeton od každé barvy musí dát na různá pole.
 
-> *Hráč tedy sice smí na jedno pole umístit po jednom žetonu od každé barvy, zbylé dva žetony však v tom případě musí umístit každý k jinému poli.*
+> _Hráč tedy sice smí na jedno pole umístit po jednom žetonu od každé barvy, zbylé dva žetony však v tom případě musí umístit každý k jinému poli._
 
 ### Vyhodnocení
 
@@ -378,7 +378,7 @@ Pokud hráč omylem umístí žetony obou barev stejně, postupujte v okamžiku,
 - Stejně postupujte i v případě, že hráč umístí oba žetony stejné barvy na jedno pole (to se může stát i v základní variantě hry).
 - Pokud umisťoval čtyři žetony (ve třetím až sedmém kole) a dal je po dvou na stejná pole, pak musí oba své spodní žetony vzít a umístit je znovu v souladu s pravidly.
 
-> *Jeden z nich může dát i na původní pozici (na vršek komínku u stejného pole), v tom případě však druhý musí dát jinam.*
+> _Jeden z nich může dát i na původní pozici (na vršek komínku u stejného pole), v tom případě však druhý musí dát jinam._
 
 ---
 

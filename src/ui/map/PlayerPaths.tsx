@@ -1,29 +1,42 @@
-import { createMemo, For, Show } from 'solid-js';
-import { Line } from 'solidjs-simple-maps';
-import { geoCentroid } from 'd3-geo';
-import { gameStore } from '../../store/gameStore';
-import { CountryId } from '../../types/game';
+import { createMemo, For, Show } from "solid-js";
+import { Line, Coordinates, createCoordinates } from "solidjs-simple-maps";
+import { geoCentroid, GeoPermissibleObjects } from "d3-geo";
+import { Feature } from "geojson";
+import { gameStore } from "../../store/gameStore";
+import { CountryId } from "../../types/game";
 
 interface PlayerPathsProps {
-    geographies: any[];
+    geographies: GeoPermissibleObjects[];
+}
+
+interface PathLine {
+    from: Coordinates;
+    to: Coordinates;
+    color: string;
+    key: string;
+    offset: number;
+    opacity: number;
+    width: number;
+    pid: string;
+    isHighlighted: boolean;
 }
 
 export function PlayerPaths(props: PlayerPathsProps) {
     const lines = createMemo(() => {
-        const result: any[] = [];
+        const result: PathLine[] = [];
 
         // Only show in ROUND_END or GAME_END
-        if (gameStore.phase !== 'ROUND_END' && gameStore.phase !== 'GAME_END') return result;
+        if (gameStore.phase !== "ROUND_END" && gameStore.phase !== "GAME_END") return result;
 
         const latestRound = gameStore.roundHistory[gameStore.roundHistory.length - 1];
         if (!latestRound) return result;
 
-        const countryCentroids: Record<string, [number, number]> = {};
-        props.geographies.forEach(geo => {
+        const countryCentroids: Record<string, Coordinates> = {};
+        props.geographies.forEach((geo) => {
             const centroid = geoCentroid(geo);
-            const id = geo.id as CountryId;
+            const id = (geo as Feature).id as CountryId;
             if (id && centroid) {
-                countryCentroids[id] = centroid;
+                countryCentroids[id] = createCoordinates(centroid[0], centroid[1]);
             }
         });
 
@@ -54,7 +67,7 @@ export function PlayerPaths(props: PlayerPathsProps) {
                                 opacity,
                                 width,
                                 pid,
-                                isHighlighted
+                                isHighlighted,
                             });
                         }
                     }
@@ -63,7 +76,7 @@ export function PlayerPaths(props: PlayerPathsProps) {
         });
 
         // specific sorting to ensure highlighted is on top?
-        result.sort((a, b) => (a.isHighlighted === b.isHighlighted) ? 0 : a.isHighlighted ? 1 : -1);
+        result.sort((a, b) => (a.isHighlighted === b.isHighlighted ? 0 : a.isHighlighted ? 1 : -1));
 
         return result;
     });
@@ -72,7 +85,7 @@ export function PlayerPaths(props: PlayerPathsProps) {
         <Show when={lines().length > 0}>
             <g>
                 <For each={lines()}>
-                    {line => (
+                    {(line) => (
                         <Line
                             from={line.from}
                             to={line.to}

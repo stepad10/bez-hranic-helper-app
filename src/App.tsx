@@ -12,15 +12,15 @@ import { Show } from "solid-js";
 function App() {
     return (
         <div class="main">
-            <Show when={gameStore.phase === 'MENU'}>
+            <Show when={gameStore.phase === "MENU"}>
                 <WelcomeScreen />
             </Show>
-            <Show when={gameStore.phase === 'SETUP'}>
+            <Show when={gameStore.phase === "SETUP"}>
                 <MainMenu />
             </Show>
 
             {/* Game Phase */}
-            <Show when={gameStore.phase !== 'MENU' && gameStore.phase !== 'SETUP'}>
+            <Show when={gameStore.phase !== "MENU" && gameStore.phase !== "SETUP"}>
                 {/* Sidebar on the Left */}
                 <GameSidebar />
                 <GeoMap />
@@ -28,7 +28,7 @@ function App() {
                 {/* UI Overlay Layer */}
                 <CardOffer />
                 <PlayerPanel />
-                <Show when={gameStore.phase === 'GAME_END'}>
+                <Show when={gameStore.phase === "GAME_END"}>
                     <GameEndView />
                 </Show>
             </Show>

@@ -1,11 +1,7 @@
-import { CountryId } from '../types/game';
-import { GraphNode } from '../data/europeGraph';
+import { CountryId } from "../types/game";
+import { GraphNode } from "../data/europeGraph";
 
-export function findShortestPath(
-    startId: CountryId,
-    endId: CountryId,
-    graph: Record<CountryId, GraphNode>
-): CountryId[] {
+export function findShortestPath(startId: CountryId, endId: CountryId, graph: Record<CountryId, GraphNode>): CountryId[] {
     if (startId === endId) return [startId];
 
     const queue: CountryId[][] = [[startId]];
@@ -35,10 +31,7 @@ export function findShortestPath(
  * Finds the shortest path visiting valid waypoints in order.
  * Useful for calculating complex journey costs.
  */
-export function findMultiStagePath(
-    stops: CountryId[],
-    graph: Record<CountryId, GraphNode>
-): CountryId[] {
+export function findMultiStagePath(stops: CountryId[], graph: Record<CountryId, GraphNode>): CountryId[] {
     if (stops.length < 2) return stops;
 
     let fullPath: CountryId[] = [];
@@ -72,7 +65,7 @@ export interface JourneyCost {
 export function calculateJourneyCost(
     path: CountryId[],
     graph: Record<CountryId, GraphNode>,
-    waypoints?: CountryId[] // Optional list of stops (Start -> Choice1 -> Choice2 -> Dest)
+    waypoints?: CountryId[], // Optional list of stops (Start -> Choice1 -> Choice2 -> Dest)
 ): JourneyCost {
     if (path.length === 0) return { total: 0, breakdown: { borders: 0, neighbors: 0 } };
 
@@ -91,7 +84,7 @@ export function calculateJourneyCost(
             const to = waypoints[i + 1];
 
             const fromNode = graph[from];
-            const isNeighbor = fromNode?.neighbors.some(n => n.target === to);
+            const isNeighbor = fromNode?.neighbors.some((n) => n.target === to);
 
             if (isNeighbor) {
                 neighborCost += 30;
@@ -102,7 +95,7 @@ export function calculateJourneyCost(
         const startId = path[0];
         const endId = path[path.length - 1];
         const startNode = graph[startId];
-        const isDirectNeighbor = startNode?.neighbors.some(n => n.target === endId);
+        const isDirectNeighbor = startNode?.neighbors.some((n) => n.target === endId);
         if (isDirectNeighbor) neighborCost = 30;
     }
 
@@ -111,6 +104,6 @@ export function calculateJourneyCost(
         breakdown: {
             borders: borderCost,
             neighbors: neighborCost,
-        }
+        },
     };
 }
