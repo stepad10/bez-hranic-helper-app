@@ -3,4 +3,14 @@ import { render } from "solid-js/web";
 
 import App from "./App";
 
-render(() => <App />, document.getElementById("root")!);
+import "./index.css";
+import { ThemeProvider } from "@/components/theme-provider";
+
+render(
+    () => (
+        <ThemeProvider>
+            <App />
+        </ThemeProvider>
+    ),
+    document.getElementById("root")!,
+);

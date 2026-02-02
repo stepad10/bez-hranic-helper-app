@@ -1,4 +1,7 @@
 import { dispatch } from "../../store/gameStore";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Users, Globe } from "lucide-solid";
 
 export function WelcomeScreen() {
     const handlePassNPlay = () => {
@@ -11,80 +14,52 @@ export function WelcomeScreen() {
     };
 
     return (
-        <div
-            style={{
-                position: "absolute",
-                top: "0",
-                left: "0",
-                right: "0",
-                bottom: "0",
-                background: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
-                display: "flex",
-                "flex-direction": "column",
-                "align-items": "center",
-                "justify-content": "center",
-                color: "white",
-                "z-index": 1000,
-            }}
-        >
-            <h1 style={{ "font-size": "4rem", "margin-bottom": "4rem", "text-shadow": "0 4px 6px rgba(0,0,0,0.3)" }}>Without Borders</h1>
+        <div class="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-950 p-6 text-slate-100">
+            <h1 class="mb-12 text-6xl font-black tracking-tight text-white drop-shadow-2xl">Without Borders</h1>
 
-            <div
-                style={{
-                    display: "flex",
-                    "flex-direction": "column",
-                    gap: "1.5rem",
-                    "min-width": "300px",
-                }}
-            >
-                <button
-                    onClick={handlePassNPlay}
-                    style={{
-                        padding: "1.5rem",
-                        background: "#3b82f6",
-                        color: "white",
-                        border: "none",
-                        "border-radius": "12px",
-                        "font-size": "1.5rem",
-                        "font-weight": "bold",
-                        cursor: "pointer",
-                        "box-shadow": "0 4px 6px rgba(0,0,0,0.1)",
-                        transition: "transform 0.1s",
-                        display: "flex",
-                        "align-items": "center",
-                        "justify-content": "center",
-                        gap: "10px",
-                    }}
-                    onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.98)")}
-                    onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
-                >
-                    <span>👥</span> Pass 'n Play
-                </button>
+            <div class="grid w-full max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
+                {/* Local Play Card */}
+                <Card class="border-white/10 bg-white/5 transition-all hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/20">
+                    <CardHeader>
+                        <CardTitle class="flex items-center gap-2 text-2xl text-white">
+                            <Users class="h-6 w-6 text-blue-400" />
+                            Pass 'n Play
+                        </CardTitle>
+                        <CardDescription class="text-slate-400">Play locally on this device with friends.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p class="mb-6 text-sm text-slate-400">Perfect for game nights. Share the device and plan your routes together.</p>
+                        <Button onClick={handlePassNPlay} size="lg" class="w-full bg-blue-600 text-lg font-bold hover:bg-blue-500 shadow-lg shadow-blue-500/20">
+                            Play Local
+                        </Button>
+                    </CardContent>
+                </Card>
 
-                <button
-                    onClick={handleOnlinePlay}
-                    style={{
-                        padding: "1.5rem",
-                        background: "rgba(255,255,255,0.1)",
-                        color: "#94a3b8",
-                        border: "2px dashed #475569",
-                        "border-radius": "12px",
-                        "font-size": "1.5rem",
-                        "font-weight": "bold",
-                        cursor: "not-allowed", // Changed to help user understand it's not ready
-                        "box-shadow": "none",
-                        transition: "transform 0.1s",
-                        display: "flex",
-                        "align-items": "center",
-                        "justify-content": "center",
-                        gap: "10px",
-                    }}
-                >
-                    <span>🌐</span> Online Play
-                </button>
+                {/* Online Play Card (Disabled) */}
+                <Card class="border-white/5 bg-transparent opacity-60 transition-all">
+                    <CardHeader>
+                        <CardTitle class="flex items-center gap-2 text-2xl text-slate-300">
+                            <Globe class="h-6 w-6 text-slate-500" />
+                            Online Play
+                        </CardTitle>
+                        <CardDescription class="text-slate-500">Challenge players from around the world.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p class="mb-6 text-sm text-slate-500">Matchmaking and private lobbies coming soon in future updates.</p>
+                        <Button
+                            onClick={handleOnlinePlay}
+                            variant="outline"
+                            size="lg"
+                            class="w-full cursor-not-allowed border-slate-700 bg-transparent text-slate-500 hover:bg-transparent"
+                            disabled
+                        >
+                            Coming Soon
+                        </Button>
+                    </CardContent>
+                </Card>
             </div>
 
-            <p style={{ "margin-top": "3rem", color: "#64748b", "font-size": "0.9rem" }}>v1.0.0 Alpha</p>
+            <p class="mt-16 text-sm text-slate-600">v1.0.0 Alpha</p>
         </div>
     );
 }
