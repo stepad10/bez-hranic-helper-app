@@ -1,5 +1,8 @@
 import { createSignal, createMemo, Show, For } from "solid-js";
 import { gameStore, dispatch } from "../../store/gameStore";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { X, ChevronUp, ChevronDown } from "lucide-solid";
 
 export function GameSidebar() {
     const [isLegendOpen, setIsLegendOpen] = createSignal(false);
@@ -41,163 +44,98 @@ export function GameSidebar() {
     });
 
     return (
-        <div
-            class="game-sidebar"
-            style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                bottom: 0,
-                width: "250px",
-                background: "rgba(255, 255, 255, 0.95)",
-                "box-shadow": "2px 0 8px rgba(0,0,0,0.1)",
-                padding: "1.5rem",
-                display: "flex",
-                "flex-direction": "column",
-                "z-index": 90, // Below top overlays but above map
-                "overflow-y": "hidden",
-            }}
-        >
+        <aside class="fixed bottom-0 left-0 top-0 flex w-[300px] flex-col overflow-hidden border-r bg-background/95 shadow-xl backdrop-blur-sm transition-all z-50">
             {/* Header with Back Button */}
-            <div style={{ display: "flex", "align-items": "center", "margin-bottom": "1rem" }}>
-                <button
-                    onClick={() => window.location.reload()}
-                    title="Restart Game"
-                    style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        "font-size": "1.2rem",
-                        "margin-right": "0.5rem",
-                        color: "#666",
-                        padding: "0 0.25rem",
-                    }}
-                >
-                    ✕
-                </button>
-                <h1 style={{ "font-size": "1.5rem", margin: 0, color: "#f59e0b", flex: 1 }}>Without Borders</h1>
+            <div class="flex items-center justify-between border-b p-4">
+                <Button variant="ghost" size="icon" onClick={() => window.location.reload()} title="Restart Game">
+                    <X class="h-5 w-5" />
+                    <span class="sr-only">Restart</span>
+                </Button>
+                <h1 class="text-xl font-bold text-primary">Without Borders</h1>
             </div>
 
-            {/* Phase Info */}
-            <div style={{ "margin-bottom": "2rem" }}>
-                <div style={{ "text-transform": "uppercase", "font-size": "0.75rem", color: "#666", "letter-spacing": "1px" }}>Round {gameStore.round}</div>
-                <h2 style={{ "font-size": "1.1rem", margin: "0.25rem 0" }}>{gameStore.phase.replace("_", " ")}</h2>
-                <p style={{ "line-height": "1.5", "font-size": "0.95rem", color: "#333" }}>{instructions()}</p>
+            {/* Content Container */}
+            <div class="flex flex-1 flex-col overflow-y-auto p-4">
+                {/* Phase Info */}
+                <div class="mb-6 space-y-2">
+                    <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Round {gameStore.round}</div>
+                    <h2 class="text-lg font-semibold capitalize text-foreground">{gameStore.phase.replace("_", " ").toLowerCase()}</h2>
+                    <p class="text-sm leading-relaxed text-muted-foreground">{instructions()}</p>
 
-                <Show when={gameStore.phase === "DEALING"}>
-                    <button
-                        onClick={() => dispatch({ type: "DEAL_ROUND", payload: { round: gameStore.round } })}
-                        style={{
-                            "margin-top": "1rem",
-                            padding: "0.5rem 1rem",
-                            background: "#3b82f6",
-                            color: "white",
-                            border: "none",
-                            "border-radius": "4px",
-                            cursor: "pointer",
-                            display: "block",
-                            width: "100%",
-                        }}
-                    >
-                        Deal Round
-                    </button>
-                </Show>
+                    <div class="pt-2">
+                        <Show when={gameStore.phase === "DEALING"}>
+                            <Button class="w-full" onClick={() => dispatch({ type: "DEAL_ROUND", payload: { round: gameStore.round } })}>
+                                Deal Round
+                            </Button>
+                        </Show>
 
-                <Show when={gameStore.phase === "TRAVEL_PLANNING"}>
-                    <button
-                        onClick={() => dispatch({ type: "RESOLVE_ROUND" })}
-                        disabled={!canResolve()}
-                        style={{
-                            "margin-top": "1rem",
-                            padding: "0.5rem 1rem",
-                            background: canResolve() ? "#22c55e" : "#9ca3af",
-                            color: "white",
-                            border: "none",
-                            "border-radius": "4px",
-                            cursor: canResolve() ? "pointer" : "not-allowed",
-                            display: "block",
-                            width: "100%",
-                        }}
-                    >
-                        Finish Round & Evaluate
-                    </button>
-                </Show>
+                        <Show when={gameStore.phase === "TRAVEL_PLANNING"}>
+                            <Button
+                                class="w-full"
+                                onClick={() => dispatch({ type: "RESOLVE_ROUND" })}
+                                disabled={!canResolve()}
+                                variant={canResolve() ? "default" : "secondary"}
+                            >
+                                Finish Round & Evaluate
+                            </Button>
+                        </Show>
 
-                <Show when={gameStore.phase === "ROUND_END"}>
-                    <button
-                        onClick={() => dispatch({ type: "DEAL_ROUND", payload: { round: gameStore.round + 1 } })}
-                        style={{
-                            "margin-top": "1rem",
-                            padding: "0.5rem 1rem",
-                            background: "#eab308",
-                            color: "white",
-                            border: "none",
-                            "border-radius": "4px",
-                            cursor: "pointer",
-                            display: "block",
-                            width: "100%",
-                            "margin-bottom": "1rem",
-                        }}
-                    >
-                        Next Round
-                    </button>
-                </Show>
+                        <Show when={gameStore.phase === "ROUND_END"}>
+                            <Button
+                                class="w-full bg-amber-500 hover:bg-amber-600"
+                                onClick={() => dispatch({ type: "DEAL_ROUND", payload: { round: gameStore.round + 1 } })}
+                            >
+                                Next Round
+                            </Button>
+                        </Show>
+                    </div>
+                </div>
+
+                {/* Score History Log */}
+                <div class="flex-1 border-t pt-4">
+                    <HistoryLog />
+                </div>
             </div>
 
-            {/* Score History Log - Scrollable Area */}
-            <div style={{ flex: 1, "overflow-y": "auto", "min-height": 0, "margin-bottom": "1rem", "border-top": "1px solid #eee" }}>
-                <HistoryLog />
-            </div>
-
-            {/* Legend */}
-            <div style={{ "margin-top": "auto", "border-top": "1px solid #eee" }}>
+            {/* Legend Footer */}
+            <div class="border-t bg-muted/30">
                 <button
                     onClick={() => setIsLegendOpen(!isLegendOpen())}
-                    style={{
-                        width: "100%",
-                        background: "none",
-                        border: "none",
-                        padding: "0.5rem 0",
-                        display: "flex",
-                        "justify-content": "space-between",
-                        "align-items": "center",
-                        cursor: "pointer",
-                        color: "#666",
-                        "font-size": "0.9rem",
-                        "font-weight": "bold",
-                    }}
+                    class="flex w-full items-center justify-between px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                 >
                     <span>Map Legend</span>
-                    <span>{isLegendOpen() ? "▼" : "▲"}</span>
+                    {isLegendOpen() ? <ChevronDown class="h-4 w-4" /> : <ChevronUp class="h-4 w-4" />}
                 </button>
 
                 <Show when={isLegendOpen()}>
-                    <ul style={{ "list-style": "none", padding: "0 0 1rem 0", margin: 0, display: "flex", "flex-direction": "column", gap: "0.75rem" }}>
-                        <LegendItem color="#22c55e" label="Starting Country" />
-                        <LegendItem color="#ef4444" label="Destination Country" />
-                        <LegendItem color="#fef08a" border="#eab308" label="Offer (Available)" />
-                        <LegendItem color="#d6d6d6" border="#7d7d7d" label="Ordinary Country" />
-                        <LegendItem color="#3b82f6" type="circle" label="Player Token" />
+                    <ul class="space-y-2 px-4 pb-4 pt-1">
+                        <LegendItem color="bg-green-500" label="Starting Country" />
+                        <LegendItem color="bg-red-500" label="Destination Country" />
+                        <LegendItem color="bg-yellow-200" border="border-yellow-500" label="Offer (Available)" />
+                        <LegendItem color="bg-gray-300" border="border-gray-500" label="Ordinary Country" />
+                        <LegendItem color="bg-blue-500" type="circle" label="Player Token" />
                     </ul>
                 </Show>
             </div>
-        </div>
+        </aside>
     );
 }
 
 function LegendItem(_props: { color: string; border?: string; label: string; type?: "box" | "circle" }) {
-    // Props default
     const type = () => _props.type || "box";
     return (
-        <li style={{ display: "flex", "align-items": "center", gap: "0.5rem", "font-size": "0.75rem" }}>
+        <li class="flex items-center gap-2 text-xs text-secondary-foreground">
             <div
-                style={{
-                    width: "12px",
-                    height: "12px",
-                    background: _props.color,
-                    border: _props.border ? `2px solid ${_props.border}` : "none",
-                    "border-radius": type() === "circle" ? "50%" : "2px",
-                }}
+                class={cn(
+                    "h-3 w-3 shadow-sm",
+                    _props.color,
+                    _props.border ? `border-2 ${_props.border.replace("border-", "border-")}` : "", // Tailwind class merge quirk, relying on 'border-color' usage
+                    // Actually _props.border is passed like "border-yellow-500", so we just need to append it if it's a class.
+                    // But wait, the original passed a color hex string. Now I switched to classes.
+                    // Let's assume _props.color is a class like "bg-red-500" and border is "border-red-600".
+                    _props.border,
+                    type() === "circle" ? "rounded-full" : "rounded-sm",
+                )}
             />
             <span>{_props.label}</span>
         </li>
@@ -206,96 +144,82 @@ function LegendItem(_props: { color: string; border?: string; label: string; typ
 
 function HistoryLog() {
     const history = createMemo(() => gameStore.roundHistory);
-
-    // Show latest first
     const reversedHistory = createMemo(() => [...history()].reverse());
 
     return (
         <Show when={reversedHistory().length > 0}>
-            <div style={{ "padding-top": "1rem" }}>
-                <h3 style={{ "font-size": "1rem", margin: "0 0 1rem 0", color: "#666" }}>Round History</h3>
-                <div style={{ display: "flex", "flex-direction": "column", gap: "1.5rem" }}>
-                    <For each={reversedHistory()}>
-                        {(summary) => (
-                            <div style={{ "font-size": "0.85rem" }}>
-                                <div style={{ "font-weight": "bold", "margin-bottom": "0.5rem", color: "#888" }}>Round {summary.round}</div>
-                                <div style={{ display: "flex", "flex-direction": "column", gap: "0.5rem" }}>
-                                    <For each={Object.keys(summary.players)}>
-                                        {(pid) => {
-                                            const pVal = summary.players[pid];
-                                            const pName = gameStore.players[pid]?.name || pid;
-                                            const pColor = gameStore.players[pid]?.color || "#333";
-                                            const path = pVal.path;
+            <h3 class="mb-3 text-sm font-semibold text-muted-foreground">Round History</h3>
+            <div class="space-y-4 pr-1">
+                <For each={reversedHistory()}>
+                    {(summary) => (
+                        <div class="text-xs">
+                            <div class="mb-1 font-bold text-muted-foreground/80">Round {summary.round}</div>
+                            <div class="space-y-2">
+                                <For each={Object.keys(summary.players)}>
+                                    {(pid) => {
+                                        const pVal = summary.players[pid];
+                                        const pName = gameStore.players[pid]?.name || pid;
+                                        const pColor = gameStore.players[pid]?.color || "#333";
+                                        const path = pVal.path;
+                                        const isHighlighted = () => gameStore.highlightedPlayerId === pid;
 
-                                            const isHighlighted = () => gameStore.highlightedPlayerId === pid;
+                                        return (
+                                            <div
+                                                class={cn(
+                                                    "border-l-4 py-1 pl-2 pr-2 transition-colors hover:bg-muted/50 rounded-r-md",
+                                                    isHighlighted() ? "bg-muted" : "bg-transparent",
+                                                )}
+                                                style={{ "border-color": pColor }}
+                                            >
+                                                <div class="font-medium text-foreground">{pName}</div>
+                                                <Show when={path && path.length > 0}>
+                                                    <div class="my-1 font-mono text-[10px] text-muted-foreground">
+                                                        <For each={path}>
+                                                            {(cid, i) => (
+                                                                <span>
+                                                                    {cid}
+                                                                    <Show when={i() < path!.length - 1}>
+                                                                        <span class="mx-1 text-muted-foreground/50">→</span>
+                                                                    </Show>
+                                                                </span>
+                                                            )}
+                                                        </For>
+                                                    </div>
+                                                </Show>
 
-                                            return (
-                                                <div
-                                                    // onMouseEnter ... dispatch?
-                                                    style={{
-                                                        "border-left": `3px solid ${pColor}`,
-                                                        "padding-left": "0.5rem",
-                                                        "padding-right": "0.5rem",
-                                                        "padding-top": "0.25rem",
-                                                        "padding-bottom": "0.25rem",
-                                                        cursor: "pointer",
-                                                        background: isHighlighted() ? "rgba(0,0,0,0.05)" : "transparent",
-                                                        transition: "background 0.2s",
-                                                        "border-radius": "0 4px 4px 0",
-                                                    }}
-                                                >
-                                                    <div style={{ "font-weight": "bold" }}>{pName}</div>
-
-                                                    {/* Path Visualization */}
-                                                    <Show when={path && path.length > 0}>
-                                                        <div style={{ "font-size": "0.8rem", color: "#666", margin: "0.25rem 0", "font-family": "monospace" }}>
-                                                            <For each={path}>
-                                                                {(cid, i) => (
-                                                                    <span>
-                                                                        {cid}
-                                                                        <Show when={i() < path!.length - 1}>
-                                                                            <span style={{ color: "#aaa", margin: "0 4px" }}>-(10)→</span>
-                                                                        </Show>
-                                                                    </span>
-                                                                )}
-                                                            </For>
+                                                <div class="text-muted-foreground">
+                                                    <Show when={pVal.journeyCost > 0}>
+                                                        <div>Travel: -{pVal.journeyCost}€</div>
+                                                    </Show>
+                                                    <Show when={pVal.space40Cost > 0}>
+                                                        <div>Space 40: -{pVal.space40Cost}€</div>
+                                                    </Show>
+                                                    <Show when={pVal.stackingPenalty > 0}>
+                                                        <div>Stacking: -{pVal.stackingPenalty}€</div>
+                                                    </Show>
+                                                    <Show
+                                                        when={pVal.totalEarnings !== undefined}
+                                                        fallback={
+                                                            <div>
+                                                                <span class="font-semibold">Cost: </span>
+                                                                <span class="font-bold text-destructive">-{pVal.totalCost}€</span>
+                                                            </div>
+                                                        }
+                                                    >
+                                                        <div>
+                                                            <span class="font-semibold">Earned:</span>
+                                                            <span class="font-bold text-green-600">+{pVal.totalEarnings}€</span>
                                                         </div>
                                                     </Show>
-
-                                                    <div style={{ display: "grid", "grid-template-columns": "1fr auto", gap: "0.25rem", color: "#555" }}>
-                                                        <Show when={pVal.journeyCost > 0}>
-                                                            <span>Travel Total: -{pVal.journeyCost}€</span>
-                                                        </Show>
-                                                        <Show when={pVal.space40Cost > 0}>
-                                                            <span>Space 40: -{pVal.space40Cost}€</span>
-                                                        </Show>
-                                                        <Show when={pVal.stackingPenalty > 0}>
-                                                            <span>Stacking: -{pVal.stackingPenalty}€</span>
-                                                        </Show>
-                                                        <Show
-                                                            when={pVal.totalEarnings !== undefined}
-                                                            fallback={
-                                                                <>
-                                                                    <span style={{ "font-weight": "bold" }}>Total Cost:</span>{" "}
-                                                                    <span style={{ color: "#ef4444", "font-weight": "bold" }}>-{pVal.totalCost}€</span>
-                                                                </>
-                                                            }
-                                                        >
-                                                            <>
-                                                                <span style={{ "font-weight": "bold" }}>Total Earned:</span>{" "}
-                                                                <span style={{ color: "#10b981", "font-weight": "bold" }}>+{pVal.totalEarnings}€</span>
-                                                            </>
-                                                        </Show>
-                                                    </div>
                                                 </div>
-                                            );
-                                        }}
-                                    </For>
-                                </div>
+                                            </div>
+                                        );
+                                    }}
+                                </For>
                             </div>
-                        )}
-                    </For>
-                </div>
+                        </div>
+                    )}
+                </For>
             </div>
         </Show>
     );
