@@ -1,0 +1,44 @@
+image: node:lts
+
+stages:
+  - lint
+  - test
+  - build
+
+cache:
+  key:
+    files:
+      - pnpm-lock.yaml
+  paths:
+    - .pnpm-store
+
+before_script:
+  - npm install --global corepack@latest
+  - corepack enable
+  - corepack prepare pnpm@latest-10 --activate
+  - pnpm config set store-dir .pnpm-store
+  - pnpm install
+
+lint:
+  stage: lint
+  script:
+    - pnpm run lint
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'main'
+
+test:
+  stage: test
+  script:
+    - pnpm run test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'main'
+
+build:
+  stage: build
+  script:
+    - pnpm run build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'main'
